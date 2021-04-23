@@ -107,14 +107,6 @@ K_d = K_0 - \frac{K_h}{K_0}\\
 \frac{dP_N}{dt} = 0
 \end{gather}
 
-
-
-
-
-
-
-
-
 \section{Order of magnitude}
 
 From \autoref{eq:exponential}, it follows that for a given shrinking speed of the microtubule ($v$) and diffusion rate of Ase1 ($D$), the decay length of the exponential ($\lambda$) is then given by:
@@ -128,6 +120,15 @@ From \autoref{eq:exponential}, it follows that for a given shrinking speed of th
 From experimental parameters, we expect  $v\simeq$ 0.1\ums{} (Fig. 2A), $k_u+k_b\simeq$ 0.01s\textsuperscript{-1} (Fig. 2E), and $D\simeq$ 0.1\umsqs for Ase1 on single microtubules, and $D\simeq$ 0.01\umsqs{} on crosslinked microtubules \cite{Lansky2015}. These parameters lead to both terms inside the square root having similar values. This means that, in our experimental conditions, accumulation is affected by Ase1 turnover. However, for lower diffusion rates or lower turnover rates, the decay length would be given by $\frac{D}{v}$, as proposed for the kinetochore protein Dam1 in \cite{Gardner2008b}.
 
 \section{Simulations}
+
+We represent the microtubule as a one dimensional logical array of size $N$, where true values represent bound molecules of Ase1, and false values represent empty sites. To simulate the dynamics of the system described in the model, we use the Gillespie algorithm \cite{Gillespie1976}. Based on all the rates of the system, we calculate the time when the next event will happen, and which event it will be. The possible events, with rates described in the Assumptions section, are:
+\begin{enumerate}
+	\item Unbinding of an Ase1 molecule.
+	\item Binding of an Ase1 molecule from solution.
+	\item Diffusion of a bound Ase1 molecule.
+	\item Depolymerisation of the microtubule at the plus end.
+	\item Exchange with the body of the microtubule at the site $N$.
+\end{enumerate}
 
 \small
 \bibliography{./library.bib}

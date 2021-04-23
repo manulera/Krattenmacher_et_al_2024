@@ -4,3 +4,10 @@ preconfig.py
 output.txt
 depol.txt
 /run*/
+tex_document/main.aux
+tex_document/main.bbl
+tex_document/main.blg
+tex_document/main.log
+tex_document/main.out
+tex_document/main.pdf
+tex_document/main.synctex.gz
