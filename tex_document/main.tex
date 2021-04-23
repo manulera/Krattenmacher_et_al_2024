@@ -1,0 +1,136 @@
+\documentclass{article}
+\usepackage[a4paper, margin={2cm, 2cm}]{geometry}
+\usepackage{amsmath}
+\usepackage{hyperref}
+% Package to show greek letters without math mode
+\usepackage{textgreek}
+
+\newcommand{\nm}{\mbox{nm}}
+\newcommand{\nms}{\mbox{nm/s}}
+\newcommand{\um}{\textmu m}
+\newcommand{\ums}{\textmu m/s}
+\newcommand{\umsqs}{\textmu m\textsuperscript{2}/s}
+\newcommand{\pN}{\ensuremath{\mbox{pN}}}
+
+\begin{document}
+
+\section{Assumptions}
+A model schematic can be found in Fig. 4A.
+
+\begin{enumerate}
+	\item We treat microtubule protofilaments as a one-dimensional lattice, where lattice index $i$ is 1 at the plus end.
+	\item Ase1 molecules are represented as particles that can bind and unbind to a lattice site with constant rates ($k_b$, $k_u$). Binding is only allowed if the lattice site is empty.
+	\item Bound Ase1 molecules undergo unbiased diffusion on the lattice with constant hopping rates ($k_h$). Diffusion is only allowed if the target site is empty.
+	\item When diffusing, if Ase1 reaches the microtubule end, it does not detach (red arrow on the left of Fig. 4A).
+	\item Microtubule depolymerisation occurs only at the plus end with rate $k_d^0$ if the plus end is not occupied, and with rate $k_d^0(1-\Omega)$ if the plus end is occupied. $\Omega$ is simply a parameter that goes from 0 to 1. When it is 1, the microtubule never depolymerizes if Ase1 is at the tip. When it is zero, the presence of absence of Ase1 does not affect the depolymerisation rate (Fig. 4A, right).
+	\item If, because of depolymerisation, the microtubule loses a lattice unit where Ase1 is present, that Ase1 is lost into solution (figure on the right).
+\end{enumerate}
+
+\section{Simplification to a system of finite size}
+
+As shown in Fig. X, such a system will produce accumulation of Ase1 at shrinking plus ends. However, in the microtubule body, where the boundary effect of the plus end dissipates, the probability of a binding site being occupied tends to $\alpha=\frac{k_b}{k_b+k_u}$, which is solely determined by the binding and unbinding constants.
+Therefore, we can simulate only a fraction of the microtubule with $N$ sites, as long as the probability of finding a molecule at position $N$, $P_N$, tends to $\alpha$.
+
+To simulate the exchange with the microtubule body, we apply an extra rule at the system on the lattice site $N$: molecules can be lost at site $N$ with rate $k_h(1-\alpha)$. This mimics diffusion towards the microtubule body, where the probability of a site being empty is $1-\alpha$. Similarly, when site $N$ is empty, a molecule can appear at position $N$ with rate $\alpha k_h$, which mimics diffusion from the microtubule body to site $N$.
+When a depolymerisation event happens, the lattice indexes are shifted, such that site $i+1$ becomes site $i$. The probability of the incoming $N$ site being occupied is $\alpha$.
+
+\section{Mean field theory}
+
+Next, we use a mean-field theory where we consider the average probability of a site $i$ being occupied ($P_i$), and neglect correlations between neighbouring sites. We can then write a discrete differential equation of the probability of a site being occupied in the bulk of the microtubule:
+
+\begin{equation}
+\label{eq:dPi}
+\frac{dP_i}{dt} = 
+(P_{i+1} + P_{i-1} - 2P_i) k_h   + % Diff
+(1-P_i)k_b - P_i k_u   + % Binding unbinding
+(P_{i+1}-P_i)k_d % depolymerisation
+\end{equation}
+
+The terms of the equation represent diffusion, binding,  unbinding and depolymerisation, where $k_d$ is the effective depolymerisation rate, given by the following expression (see Assumptions):
+\begin{equation}
+\label{eq:k_d}
+k_d = (1-P_1)k_d^0 + P_1(1-\Omega)k_d^0
+\end{equation}
+
+Separate equations govern the change in density at sites 1 and $N$:
+\begin{gather}
+\label{eq:dP1}
+\frac{dP_1}{dt}=k_h  P_2  (1 - P_1) - k_h  P_1  (1 - P_2) % Diffusion
+ - P_1  k_u + (1 - P_1)  k_b % Binding
+ + k_d  P_2 - k_d^0  P_1  (1 - \Omega)\\ 
+ \label{eq:dPN}
+\frac{dP_N}{dt} = 0
+\end{gather}
+
+Note that this means that if $\Omega$ is 1 (No depolymerisation happens when site 1 is occupied), when there is depolymerisation the probability density of $P_2$ is added to $P_1$, without loss of probability density from $P_1$.
+
+This differential equation can be evolved from any initial conditions, and always converges to the same solution for a set of given parameters. To gain a better understanding of the system, we can make a continuous approximation of \autoref{eq:dPi}, where probability density $\rho$ is normalised to $\alpha$, time ($\tau$) and rates ($K$) are normalised to $k_u + k_b$, and spatial units ($x$) are normalised to the length of the lattice unit, we obtain the following expression:
+
+\begin{equation}
+\frac{d\rho}{d\tau} = K_h\rho'' + K_d\rho'-\rho+1
+\end{equation}
+
+$\rho'$ and $\rho''$ are the first and second spatial derivatives of $\rho$. The steady state of the differential equation has the following general solution:
+
+\begin{equation}
+\rho(x) = 1+C_1exp\left(-x\frac{K_d + \sqrt{K_d^2 + 4 K_h)}}{2K_h}\right) + C_2exp\left(-x\frac{K_d - \sqrt{K_d^2 + 4 K_h)}}{2K_h}\right)
+\end{equation}
+
+Since at steady state, $\lim_{x\to\infty}\rho(x)=1$, it follows that $C_2=0$. We can express $C_1$ as a function of $\rho_0$, the probability density at the microtubule plus end ($x=0$), which is a relevant quantity of the system, as it determines the rate of microtubule depolymerisation (\autoref{eq:k_d}). Then, we obtain:
+
+\begin{equation}
+\label{eq:exponential}
+\frac{\rho-\alpha}{\rho_0-\alpha}=exp\left(-x\frac{K_d + \sqrt{K_d^2 + 4 K_h)}}{2K_h}\right)
+\end{equation}
+
+This means that at steady state, the Ase1 density profile along the microtubule is maximal at the microtubule tip and decays exponentially until $\rho=1$, where the probability of a binding site being occupied is $\alpha$ (Fig. 4X). To calculate the rate of depolymerisation $K_d$ we can use the fact that at steady state, the amount of Ase1 in the last $N$ sites of the system has to be constant. This means that the influx of Ase1 at site $N$ due to depolymerisation has to be equal to the sum of the outflux of Ase1 at the plus end and the net unbinding of Ase1 along the microtubule wherever the density is higher than $\alpha$:
+
+\begin{equation}
+\label{eq:balance}
+K_d = \rho_0(1-\Omega)K_d^0 + \int_{x=0}^{x=\infty}\left(\rho-1\right)dx
+\end{equation}
+
+The integral in this equation can be solved, and combining the result with \autoref{eq:k_d}, we obtain the following system of equations:
+\begin{equation}
+\begin{cases}
+K_d = \rho_0(1-\Omega)K_d^0 + (\frac{1}{\alpha}-\rho_0)K_d^0\\
+K_d = \rho_0(1-\Omega)K_d^0 - \frac{2K_h(1-\rho_0)}{K_d+\sqrt{K_d^2+4K_h}}
+\end{cases}
+\end{equation}
+
+This system can be solved numerically to obtain the value of $\rho_0$ and $K_d$ at steady state.
+
+\begin{gather}
+\label{eq:solK_0}
+K_d = K_0 - \frac{K_h}{K_0}\\ 
+\label{eq:solP_0}
+\frac{dP_N}{dt} = 0
+\end{gather}
+
+
+
+
+
+
+
+
+
+\section{Order of magnitude}
+
+From \autoref{eq:exponential}, it follows that for a given shrinking speed of the microtubule ($v$) and diffusion rate of Ase1 ($D$), the decay length of the exponential ($\lambda$) is then given by:
+
+
+\begin{equation}
+\label{eq:decay_length}
+\lambda = \frac{2D}{v+\sqrt{v^2 + 4D(k_u+k_b)}}
+\end{equation}
+
+From experimental parameters, we expect  $v\simeq$ 0.1\ums{} (Fig. 2A), $k_u+k_b\simeq$ 0.01s\textsuperscript{-1} (Fig. 2E), and $D\simeq$ 0.1\umsqs for Ase1 on single microtubules, and $D\simeq$ 0.01\umsqs{} on crosslinked microtubules \cite{Lansky2015}. These parameters lead to both terms inside the square root having similar values. This means that, in our experimental conditions, accumulation is affected by Ase1 turnover. However, for lower diffusion rates or lower turnover rates, the decay length would be given by $\frac{D}{v}$, as proposed for the kinetochore protein Dam1 in \cite{Gardner2008b}.
+
+\section{Simulations}
+
+\small
+\bibliography{./library.bib}
+\bibliographystyle{abbrv}
+
+\end{document}

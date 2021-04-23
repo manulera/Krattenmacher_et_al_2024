@@ -1,3 +1,6 @@
 /.idea/
 /preconfig/
 preconfig.py
+output.txt
+depol.txt
+/run*/

@@ -30,11 +30,14 @@ To create the configuration files for the simulation, you will also need the pyt
 git clone https://github.com/nedelec/preconfig
 ```
 
-Then copy the file `preconfig.py` to the main folder, in bash:
+Then copy the file `preconfig` to the main folder, in bash:
 
 ```
-cp 
+cp preconfig/preconfig ./preconfig.py
 ```
+You should be ready to run all the scripts now
 
+### Reproducing the simulations
 
-###
+Each set of simulations is described by a file called `config.txt.tpl`, which contains the parameters of all the simulations that will be run in that folder. To understand how each individual configuration file is produced from this, see [preconfig documentation](https://github.com/nedelec/preconfig).
+
