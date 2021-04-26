@@ -16,6 +16,8 @@ Once you have `pipenv` installed, you can install the project dependencies by go
 pipenv install
 ```
 
+For this to work, you either need to have python 3.9 installed in your computer, or have a python environment manager that can download the version specified in the `Pipfile` file. I normally use `pyenv` ([link](https://github.com/pyenv/pyenv#installation)).
+
 Then, to run any of the scripts you can activate a shell with the python environment you just created by calling:
 
 ```
