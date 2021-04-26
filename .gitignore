@@ -11,3 +11,5 @@ tex_document/main.log
 tex_document/main.out
 tex_document/main.pdf
 tex_document/main.synctex.gz
+/__pycache__/
+/dynamics/

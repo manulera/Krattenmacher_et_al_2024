@@ -55,7 +55,7 @@ k_d = (1-P_1)k_d^0 + P_1(1-\Omega)k_d^0
 Separate equations govern the change in density at sites 1 and $N$:
 \begin{gather}
 \label{eq:dP1}
-\frac{dP_1}{dt}=k_h  P_2  (1 - P_1) - k_h  P_1  (1 - P_2) % Diffusion
+\frac{dP_1}{dt}=k_h (P_2-P_1) % Diffusion
  - P_1  k_u + (1 - P_1)  k_b % Binding
  + k_d  P_2 - k_d^0  P_1  (1 - \Omega)\\ 
  \label{eq:dPN}
@@ -80,7 +80,7 @@ Since at steady state, $\lim_{x\to\infty}\rho(x)=1$, it follows that $C_2=0$. We
 
 \begin{equation}
 \label{eq:exponential}
-\frac{\rho-\alpha}{\rho_0-\alpha}=exp\left(-x\frac{K_d + \sqrt{K_d^2 + 4 K_h)}}{2K_h}\right)
+\frac{\rho-1}{\rho_0-1}=exp\left(-x\frac{K_d + \sqrt{K_d^2 + 4 K_h)}}{2K_h}\right)
 \end{equation}
 
 This means that at steady state, the Ase1 density profile along the microtubule is maximal at the microtubule tip and decays exponentially until $\rho=1$, where the probability of a binding site being occupied is $\alpha$ (Fig. 4X). To calculate the rate of depolymerisation $K_d$ we can use the fact that at steady state, the amount of Ase1 in the last $N$ sites of the system has to be constant. This means that the influx of Ase1 at site $N$ due to depolymerisation has to be equal to the sum of the outflux of Ase1 at the plus end and the net unbinding of Ase1 along the microtubule wherever the density is higher than $\alpha$:
@@ -93,19 +93,12 @@ K_d = \rho_0(1-\Omega)K_d^0 + \int_{x=0}^{x=\infty}\left(\rho-1\right)dx
 The integral in this equation can be solved, and combining the result with \autoref{eq:k_d}, we obtain the following system of equations:
 \begin{equation}
 \begin{cases}
-K_d = \rho_0(1-\Omega)K_d^0 + (\frac{1}{\alpha}-\rho_0)K_d^0\\
+\frac{K_d}{\alpha} = \rho_0(1-\Omega)K_d^0 + (\frac{1}{\alpha}-\rho_0)K_d^0\\
 K_d = \rho_0(1-\Omega)K_d^0 - \frac{2K_h(1-\rho_0)}{K_d+\sqrt{K_d^2+4K_h}}
 \end{cases}
 \end{equation}
 
 This system can be solved numerically to obtain the value of $\rho_0$ and $K_d$ at steady state.
-
-\begin{gather}
-\label{eq:solK_0}
-K_d = K_0 - \frac{K_h}{K_0}\\ 
-\label{eq:solP_0}
-\frac{dP_N}{dt} = 0
-\end{gather}
 
 \section{Order of magnitude}
 
@@ -121,7 +114,7 @@ From experimental parameters, we expect  $v\simeq$ 0.1\ums{} (Fig. 2A), $k_u+k_b
 
 \section{Simulations}
 
-We represent the microtubule as a one dimensional logical array of size $N$, where true values represent bound molecules of Ase1, and false values represent empty sites. To simulate the dynamics of the system described in the model, we use the Gillespie algorithm \cite{Gillespie1976}. Based on all the rates of the system, we calculate the time when the next event will happen, and which event it will be. The possible events, with rates described in the Assumptions section, are:
+We represent the microtubule as a one dimensional logical array of size $N$, where true values represent bound molecules of Ase1, and false values represent empty sites. To simulate the dynamics of the system described in the model, we use the Gillespie algorithm \cite{Gillespie1976}. Based on all the rates of the system, we calculate the time when the next event will happen, and which event it will be. The possible events, with rates described in the Assumptions section and depicted in Fig. 4A, are:
 \begin{enumerate}
 	\item Unbinding of an Ase1 molecule.
 	\item Binding of an Ase1 molecule from solution.
@@ -129,6 +122,8 @@ We represent the microtubule as a one dimensional logical array of size $N$, whe
 	\item Depolymerisation of the microtubule at the plus end.
 	\item Exchange with the body of the microtubule at the site $N$.
 \end{enumerate}
+%TODO -----------------------------------------------------------------------------------------------
+The specific implementation of the algorithm can be found in the file \verb|simulation.py| in the XYZ.
 
 \small
 \bibliography{./library.bib}

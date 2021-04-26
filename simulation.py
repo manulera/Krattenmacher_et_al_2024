@@ -13,9 +13,10 @@ NB_RATES = 5
 
 def timeToNextEvent(rate):
     """
-    Calculate Gillespie time until next event given a certain rate, taking into account that if the rate is zero it
-    should return infinity
-    :return: Time to next event
+    Calculate Gillespie time until next event given a certain rate, taking into account
+    that if the rate is zero it should return infinity
+    :param rate: the rate of a process
+    :return: the time of next event
     """
     if rate:
         return -np.log(random.random()) / rate
@@ -45,14 +46,14 @@ class Parameters:
         # Lattice size (by default should be microtubule lattice, 0.008)
         self.a = 0.
 
-        # Velocity of shrinkage of the MT in absence of Ase1 (From your presentation, should be 0.25)
+        # Velocity of shrinkage of the MT in absence of Ase1
         self.v_s = 0.
 
         # Probability of preventing depolymerization if Ase1 is there (Set to zero by default)
-        self.P_no_depol = 0.
+        self.omega = 0.
 
         # Ase1 ========================================================================
-        # Diffusion rate of Ase1 (by default should be 0.1)
+        # Diffusion rate of Ase1 (by default should be around 0.1)
         self.D = 0.
 
         # Binding rate of Ase1 per lattice site
@@ -68,11 +69,10 @@ class Parameters:
         # Simulated length of the microtubule
         self.L_init = 0.
 
-        # Boolean that indicates whether binding equilibrium is imposed in the simulation
-
+        # Boolean that indicates whether binding equilibrium is imposed in the simulation prior to start
         self.do_equilibration = False
 
-        # Derived quantities
+        # Derivatedd quantities
         self.depol_rate = 0.
         self.k_D = 0.
         self.alpha =0.
@@ -111,8 +111,8 @@ class Parameters:
                     elif ls[0] == "v_s":
                         self.v_s = float(ls[1])
 
-                    elif ls[0] == "P_no_depol":
-                        self.P_no_depol = float(ls[1])
+                    elif ls[0] == "omega":
+                        self.omega = float(ls[1])
 
                     elif ls[0] == "D":
                         self.D = float(ls[1])
@@ -136,11 +136,11 @@ class Parameters:
                         self.t_snap = float(ls[1])
 
                     else:
-                        print("Unkwon parameter: " + ls[0] + ", skipped")
+                        raise ValueError("Unkwon parameter: " + ls[0])
 
         if self.t_snap is None or self.t_max is None:
 
-            raise TypeError("Set t_snap and t_max")
+            raise ValueError("Set t_snap and t_max")
 
         # Calculate the derivated quantities
         self.derivated()
@@ -154,7 +154,7 @@ class Parameters:
         out = ""
         out+="a = %f\n" % self.a
         out += "v_s = %f\n" % self.v_s
-        out += "P_no_depol = %f\n" % self.P_no_depol
+        out += "omega = %f\n" % self.omega
         out += "D = %f\n" % self.D
         out += "kon = %f\n" % self.kon
         out += "koff = %f\n" % self.koff
@@ -164,11 +164,14 @@ class Parameters:
         out += "t_snap = %f\n" % self.t_snap
 
     def print_for_file(self):
-
+        """
+        Print the parameters as a csv with column names
+        :return:
+        """
         out = ""
-        out+="a|v_s|P_no_depol|D|kon|koff|L_init|do_equilibration|t_max|t_snap\n"
+        out+="a|v_s|omega|D|kon|koff|L_init|do_equilibration|t_max|t_snap\n"
 
-        extra = [self.a,self.v_s,self.P_no_depol,self.D,self.kon,self.koff,self.L_init,self.do_equilibration,self.t_max,self.t_snap]
+        extra = [self.a,self.v_s,self.omega,self.D,self.kon,self.koff,self.L_init,self.do_equilibration,self.t_max,self.t_snap]
         extra = map(str,extra)
 
         out+= "|".join(extra)+"\n"
@@ -188,16 +191,18 @@ class Simulation:
         # Keeps track of when depolimerization events happenned
         self.depol_events = list()
 
-        # Store the different rates in order of the frequency of happening (rate_diffusion,rate_depol,rate_diffEdge,rate_attachment,rate_detachment,)
+        # Store the different rates in order of the frequency of happening
+        # (rate_diffusion,rate_depol,rate_diffEdge,rate_attachment,rate_detachment,)
         self.rates = np.zeros(NB_RATES)
         self.cum_rates = np.zeros(NB_RATES)
 
-
+        # The are updated after there is binding, unbinding, or an Ase1 diffuses
+        # out of the system at site N.
         self.total_sites = 0
         self.bound_ase1 = 0
         self.empty_sites = 0
 
-    # Surpringsingly is faster than numpys cumsum
+    # Surpringsingly is faster than numpys cumsum (this was a limiting step)
     def my_cumsum(self):
         self.cum_rates[0] = self.rates[0]
         self.cum_rates[1] = self.cum_rates[0]+self.rates[1]
@@ -207,14 +212,15 @@ class Simulation:
 
     def resetRates(self,p):
         # Re-set the rates
-        self.total_sites = np.size(self.mt_array)
+        self.total_sites = self.mt_array.size
         self.bound_ase1 = np.count_nonzero(self.mt_array)
         self.empty_sites = self.total_sites - self.bound_ase1
 
         self.rates[ATTACHMENT] = self.empty_sites * p.kon
         self.rates[DETACHMENT] = self.bound_ase1 * p.koff
         self.rates[DIFFUSION] = self.bound_ase1 * p.k_D
-        self.rates[DEPOLIMERIZATION] = p.depol_rate * (1 - self.mt_array[0] * p.P_no_depol)
+        # this is equal to depol_rate if the position 0 is empty, and depol_rate * (1-omega) otherwise
+        self.rates[DEPOLIMERIZATION] = p.depol_rate * (1 - self.mt_array[0] * p.omega)
         self.rates[DIFFUSION_EDGE] = p.alpha * p.k_D / 2.
 
         self.my_cumsum()
@@ -244,13 +250,11 @@ class Simulation:
 
     def equilibrate(self,p):
         """
-        :param p: Parameter object with parameters of the simulation
-        :type p:Parameters
         Reach binding equilibrium with solution, before starting the simulation
         :return:
         """
         # Number of lattice sites
-        mt_sites = np.size(self.mt_array)
+        mt_sites = self.mt_array.size
         expected_bound = int(mt_sites*p.alpha)
 
         # Get a set of random positions in the microtubule where Ase1 is bound
@@ -258,8 +262,14 @@ class Simulation:
         np.random.shuffle(self.mt_array)
 
     def decideEvent(self):
+        """
+        Returns the index of the next event, as defined by the constants in CAPs
+        on the top of this file, by using the Gillespie method
+        :return:
+        """
         randn = random.random()*self.cum_rates[-1]
-        # We know that most often it will be the case!
+
+        # We know that most often it will be a diffusion event, so we check first
         if randn<self.cum_rates[0]:
             return 0
         i=1
@@ -270,12 +280,8 @@ class Simulation:
 
     def nextEvent(self,p):
         """
-        :param p: Parameter object with parameters of the simulation
-        :type p:Parameters
         Decide which event will occur next (diffusion, binding, unbinding, or depolimerization of the microtubule)
-        :return: the time when the event happens
         """
-        # self.resetRates(p)
 
         which_event = self.decideEvent()
         event_tau = timeToNextEvent(self.cum_rates[-1])
@@ -283,19 +289,24 @@ class Simulation:
         if which_event==DIFFUSION:
             if self.eventDiffusion(p)==2:
                 self.resetRates(p)
+
         elif which_event==DEPOLIMERIZATION:
             if self.eventDepol(p):
                 self.resetRates(p)
                 self.depol_events.append(self.t + event_tau)
+
         elif which_event == DIFFUSION_EDGE:
             if self.eventDiffusionEdge(p):
                 self.resetRates(p)
+
         elif which_event == ATTACHMENT:
             self.eventAttachment(p)
             self.resetRates(p)
+
         elif which_event == DETACHMENT:
             self.eventDetachment(p)
             self.resetRates(p)
+
         return event_tau
 
     def changeRatesGain(self,p):
@@ -331,15 +342,13 @@ class Simulation:
 
         # Attach at a random position
         # chosen_i = np.random.randint(empty_positions.size)
+        # This is faster
         chosen_i = int(random.random()*empty_positions.size)
         chosen = empty_positions[chosen_i]
 
         self.mt_array[chosen] = True
 
         return 1
-
-
-
 
     def eventDetachment(self,p):
         """
@@ -362,9 +371,10 @@ class Simulation:
     def eventDiffusion(self,p):
         """
         Perform a diffusion step in a random direction for a random Ase1 molecule. If the position it is trying to move
-        to is either occupied or is outside of the microtubule (at either minus or plus end), do not do anything, and
+        to is either occupied or at the plus end of the microtubule, do not do anything, and
         return zero, since no event happenned
-        :return: 1 if event happens, 0 otherwise.
+        :return: 2 if the molecules diffuses out of the system at site N, 1 if event happens, 0 otherwise.
+        The rates of the system only need to be recalculated if the return is 2
         """
 
         # Get the indexes of the occupied sites in the lattice
@@ -391,9 +401,10 @@ class Simulation:
             # We return zero because this event didnt happen
             return 0
 
-        elif new_position==np.size(self.mt_array):
-            # The special case of the minus end that we do not specifically simulate, there the probability depends on
-            # alpha as defined in the model.
+        elif new_position==self.mt_array.size:
+            # The special case of exchange with the body of the microtubule, where the probability of a site being
+            # occupied is alpha. Therefore we test the probability alpha to decide whether the molecule exits the system
+            # at the minus end
             if p.alpha>random.random():
                 return 0
             else:
@@ -406,10 +417,9 @@ class Simulation:
         elif self.mt_array[new_position]:
 
             # We return zero because this event didnt happen
-
             return 0
 
-        # The site is available
+        # The site is available, perform the step and return 1
         else:
 
             self.mt_array[chosen]=0
@@ -417,6 +427,10 @@ class Simulation:
             return 1
 
     def eventDiffusionEdge(self,p):
+        """
+        A molecule enters the system at position N from the microtubule body, if the site N is empty
+        :return: 1 if the event happens, 0 otherwise
+        """
         if not self.mt_array[-1]:
             self.mt_array[-1]=1
             return 1
@@ -424,15 +438,16 @@ class Simulation:
             return 0
 
     def eventDepol(self,p):
-
+        """
+        The first site of the lattice is lost due to depolymerisation, and the incoming site N has a
+        probability alpha of being occupied
+        :return: 1 always
+        """
         # We shift the array, and the last position we give it a probability of alpha to be occupied
         self.mt_array[:-1] = self.mt_array[1:]
         self.mt_array[-1] = p.alpha>random.random()
 
         return 1
-
-
-
 
     def write(self,output_file):
         """
@@ -447,25 +462,34 @@ class Simulation:
             out.write("\n")
 
     def writeDepol(self,output_file):
+        """
+        Write a file with the times at which depolymerisation events occured (stored in the property depol_events of the
+        simulation)
+        :return:
+        """
         with open(output_file, "w") as out:
             out_list = map(str,self.depol_events)
             out.write(" ".join(out_list))
 
 
-    def run(self,dir):
+    def run(self,sim_dir):
         """
-        Run the simulation until the time is bigger than `t_max`, save a snapshot of the simulation,
-        every `t_snap` seconds
+        Run the simulation in sim_dir until the time is bigger than `t_max`, save a snapshot of the simulation,
+        every `t_snap` seconds. It expects the file sim_dir/config.txt to exist
         """
 
         # Read parameters from config file
         p = Parameters()
-        p.read(os.path.join(dir,"config.txt"))
-        output_file = os.path.join(dir,"output.txt")
-        depol_file = os.path.join(dir, "depol.txt")
+
+        if not os.path.isfile(os.path.join(sim_dir,"config.txt")):
+            raise FileNotFoundError("No config.txt file found in %s" % sim_dir)
+
+        p.read(os.path.join(sim_dir,"config.txt"))
+        output_file = os.path.join(sim_dir,"output.txt")
+        depol_file = os.path.join(sim_dir, "depol.txt")
 
         # Create the empty file
-        with open(output_file, "w+") as f:
+        with open(output_file, "w") as f:
             f.write("")
 
         # Calculate derivated quantities of the parameters
