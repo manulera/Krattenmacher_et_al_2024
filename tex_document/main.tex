@@ -18,11 +18,11 @@
 A model schematic can be found in Fig. 4A.
 
 \begin{enumerate}
-	\item We treat microtubule protofilaments as a one-dimensional lattice, where lattice index $i$ is 1 at the plus end.
-	\item Ase1 molecules are represented as particles that can bind and unbind to a lattice site with constant rates ($k_b$, $k_u$). Binding is only allowed if the lattice site is empty.
+	\item We treat the microtubule as a one-dimensional lattice, where lattice index $i$ is 1 at the plus end.
+	\item We assume a constant concentration of Ase1 molecules in solution. Therefore, Ase1 molecules are represented as particles that can bind and unbind to a lattice site with constant rates ($k_b$, $k_u$). Binding is only allowed if the lattice site is empty.
 	\item Bound Ase1 molecules undergo unbiased diffusion on the lattice with constant hopping rates ($k_h$). Diffusion is only allowed if the target site is empty.
 	\item When diffusing, if Ase1 reaches the microtubule end, it does not detach (red arrow on the left of Fig. 4A).
-	\item Microtubule depolymerisation occurs only at the plus end with rate $k_d^0$ if the plus end is not occupied, and with rate $k_d^0(1-\Omega)$ if the plus end is occupied. $\Omega$ is simply a parameter that goes from 0 to 1. When it is 1, the microtubule never depolymerizes if Ase1 is at the tip. When it is zero, the presence of absence of Ase1 does not affect the depolymerisation rate (Fig. 4A, right).
+	\item Microtubule depolymerisation occurs only at the plus end with rate $k_d^0$ if the plus end is not occupied, and with rate $k_d^0(1-\Omega)$ if the plus end is occupied. $\Omega$ is simply a parameter that goes from 0 to 1. When it is 1, the microtubule never depolymerizes if Ase1 is at the tip. When it is zero, the presence or absence of Ase1 does not affect the depolymerisation rate (Fig. 4A, right).
 	\item If, because of depolymerisation, the microtubule loses a lattice unit where Ase1 is present, that Ase1 is lost into solution (figure on the right).
 \end{enumerate}
 
@@ -124,6 +124,16 @@ We represent the microtubule as a one dimensional logical array of size $N$, whe
 \end{enumerate}
 %TODO -----------------------------------------------------------------------------------------------
 The specific implementation of the algorithm can be found in the file \verb|simulation.py| in the XYZ.
+
+\section{Equivalence between biased diffusion model and power-stroke model}
+
+The model described above is equivalent to a model in which the terminal subunit of the microtubule produces a characteristic force $f_d$ when detaching, as proposed in \cite{Grishchuk2017}, if all rates of the system have the form $k(f) = k_0*G(f)$, where $G$ is a function dependent on force ($f$), where $f>0$ if the force promotes the process, $f<0$ if the force opposes the process, $G(f)$ is equal to 1, such that in the absence of force, the rate is $k_0$
+
+\begin{equation}
+k_d = k_d^0\left(1 - \frac{f}{f_d} \right) 
+\end{equation}
+
+For any combination of force-dependent hopping rates of Ase1 $k_h(f)$ and force-dependent unbinding rate $k_u(f)$, the system is equivalent, if $f/f_d=P_1\Omega$. At the steady-state, $k_d=k_u+k_h$. We can solve the system for the realistic case in which $k_h\gg k_u$, so that $k_d=k_h$, and $\Omega$=1.
 
 \small
 \bibliography{./library.bib}
