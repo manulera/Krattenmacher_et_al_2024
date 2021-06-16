@@ -25,7 +25,7 @@ speed =p.omega * (1-solution[:,0]*p.omega)*p.a
 
 plt.figure()
 
-plt.plot((solution[::10,:].T - p.alpha)/(solution[::10,0]-p.alpha))
+plt.plot(speed)
 
 
 plt.show()

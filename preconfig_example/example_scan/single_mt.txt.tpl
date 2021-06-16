@@ -16,7 +16,7 @@ D = 0.08
 kon = 0.001
 
 # Unbinding rate of Ase1 - We scan this parameter
-koff = [[ [i/10. for i in range(1,20,2)] ]]
+koff = [[ [i/100. for i in range(1,20,2)] ]]
 
 ## Initial conditions --------------------------------------------------
 
