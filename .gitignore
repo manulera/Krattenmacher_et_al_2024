@@ -1,6 +1,5 @@
 /.idea/
 /preconfig/
-preconfig.py
 output.txt
 depol.txt
 /run*/
@@ -11,3 +10,4 @@ tex_document/main.log
 tex_document/main.out
 tex_document/main.synctex.gz
 /__pycache__/
+/scan/
