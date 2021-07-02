@@ -3,6 +3,8 @@
 preconfig.py
 output.txt
 depol.txt
+*.txt
+*.ipynb
 /run*/
 tex_document/main.aux
 tex_document/main.bbl

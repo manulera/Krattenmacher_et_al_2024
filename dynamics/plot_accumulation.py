@@ -15,6 +15,9 @@ def expo(x,r,y0):
 p = Parameters()
 p.read("config.txt")
 
+p.alpha = 100
+print(p.alpha)
+
 def dynamicsODE(N,t,p):
     k0 = p.depol_rate
     kh = p.k_D / 2
@@ -47,7 +50,7 @@ for kon in [0.01,0.02,0.04,0.08]:
 
     pars=curve_fit(fun2fit, t, accumulation, 0.3)
     print(pars)
-    plt.plot(t, fun2fit(t,pars[0][0]) /accumulation[-1], linestyle='--')
+    plt.plot(t, fun2fit(t,pars[0][0]), linestyle='--')
     # plt.plot(t,p.depol_rate*p.alpha*t)
     # grad_speed = np.gradient(speed)
     # plt.plot(t, (grad_speed-grad_speed[0])/grad_speed[0]/3)
@@ -59,11 +62,9 @@ for kon in [0.01,0.02,0.04,0.08]:
 
 
 
-    sol=solveDynamics(p,t)
+    #sol=solveDynamics(p,t)
     # plt.plot(t,sol,linestyle="--")
     plt.xlabel("Time (s)")
     plt.ylabel("Accumulated molecules")
 
 plt.show()
-
-

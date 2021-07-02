@@ -4,35 +4,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 from scipy.optimize import curve_fit
-
-
-p = Parameters()
-p.read("single_mt.txt")
+import os
 
 # Density on single mt:
+plt.figure(figsize=(10,10))
 
-single_dens = 0.031*8/13
-print(single_dens)
+for filename in os.listdir('./config/'):
+    p = Parameters()
+    p.read('./config/' + filename)
+    t = np.linspace(0,30,100)
+    solution = solveDiscrete(p,t,400)
+    accumulation = np.sum(solution-p.alpha,axis=1)
+    speed =p.v_s * (1-solution[:,0]*p.omega)
+    # plt.plot(t, accumulation, label=str(p.alpha) + '' + str(p.omega))
+    plt.plot(np.arange(0,400*0.008,0.008), (solution[-1,:].T - p.alpha), label=str(p.alpha) + ' ' + str(p.omega))
+    # plt.plot(t,speed, label=str(p.alpha) + '' + str(p.omega))
 
-plt.figure()
+# plt.xlabel("Time (s)")
+# plt.ylabel("Accumulated molecules")
+# plt.ylabel("Depolymerization speed (um/s)")
+# plt.ylabel("Accumulated molecules")
+plt.xlabel("Coverage (s)")
+plt.xlabel("Distance from tip (um)")
 
-
-t = np.linspace(0,80,100)
-solution = solveDiscrete(p,t,400)
-accumulation = np.sum(solution-p.alpha,axis=1)
-speed =p.v_s * (1-solution[:,0]*p.omega)
-
-plt.plot(t, accumulation)
-
-print(p.alpha)
-
-# plt.plot(t,sol,linestyle="--")
-plt.xlabel("Time (s)")
-plt.ylabel("Accumulated molecules")
-
-plt.figure()
-plt.plot(t,speed)
-
+legend = plt.legend(loc='upper right', shadow=False, fontsize='x-large')
 plt.show()
-
-

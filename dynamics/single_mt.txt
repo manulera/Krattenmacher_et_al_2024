@@ -10,13 +10,13 @@ omega = 0.75
 
 # Ase1 ========================================================================
 # Diffusion rate of Ase1
-D = 0.08
+D = 0.03
 
 # Binding rate of Ase1 per lattice site
-kon = 0.001
+kon = 0.02
 
 # Unbinding rate of Ase1
-koff = 0.01
+koff = 0.007
 
 ## Initial conditions --------------------------------------------------
 
