@@ -98,3 +98,10 @@ def decayLength(p, kd):
     """
     kh = p.k_D / 2. / (p.kon + p.koff)
     return 2. * kh / (kd + np.sqrt(kd * kd + 4 * kh))
+
+def decayLengthPhysical(p, v):
+    """
+    Calculate the decay length of the exponential from the parameters, in physical units
+    :return:
+    """
+    return 2 * p.D / (v + np.sqrt(v * v + 4 * p.D * (p.koff + p.kon)))
