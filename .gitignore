@@ -3,6 +3,7 @@
 preconfig.py
 output.txt
 depol.txt
+*.svg
 *.txt
 *.ipynb
 /run*/
@@ -13,3 +14,4 @@ tex_document/main.log
 tex_document/main.out
 tex_document/main.synctex.gz
 /__pycache__/
+
