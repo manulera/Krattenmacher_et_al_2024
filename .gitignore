@@ -5,7 +5,6 @@ output.txt
 depol.txt
 *.svg
 *.txt
-*.ipynb
 /run*/
 tex_document/main.aux
 tex_document/main.bbl
