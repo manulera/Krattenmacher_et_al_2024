@@ -14,7 +14,6 @@ def myODE(P, t,p,num_PF):
 
     dP = np.zeros_like(P)
     P_allfree = (1.-P[0])**num_PF
-    P_onthisPF = 2**(num_PF-1)/(2**num_PF-1)
 
     kd = k0 * P_allfree + k0 * (1.-P_allfree) * (1.-omega)
 
