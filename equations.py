@@ -2,7 +2,7 @@ import numpy as np
 from scipy.integrate import odeint
 from scipy.optimize import fsolve
 
-def myODE(P, t,p):
+def myODE(P, t,p,num_PF):
     """
     Discrete differential equation dP/dt, with the special cases of P1 and PN, as shown in the paper
     """
@@ -13,8 +13,10 @@ def myODE(P, t,p):
     omega = p.omega
 
     dP = np.zeros_like(P)
+    P_allfree = (1.-P[0])**num_PF
+    P_onthisPF = 2**(num_PF-1)/(2**num_PF-1)
 
-    kd = k0 * (1.-P[0]) + k0 * P[0] * (1.-omega)
+    kd = k0 * P_allfree + k0 * (1.-P_allfree) * (1.-omega)
 
     # For all except position 1 and position N-1
 
@@ -22,7 +24,7 @@ def myODE(P, t,p):
     dP[-1] = 0
 
     # dP1/dt as shown in the paper
-    dP[0] = kh * (P[1]-P[0]) - P[0] * koff + (1. - P[0]) * kon + kd * P[1] - k0 * P[0] * (1. - omega)
+    dP[0] = kh * (P[1]-P[0]) - P[0] * koff + (1. - P[0]) * kon + kd * P[1] - k0 * P[0] * (1.-omega)
 
     # Pi (excluding 1 and N-1)
     Pi = P[1:-1]
@@ -36,7 +38,7 @@ def myODE(P, t,p):
 
     return dP
 
-def solveDiscrete(p,t,N):
+def solveDiscrete(p,t,N,num_PF):
     """
     Calculates the evolution of P with the differential equation myODE, starting from all the lattice sites
     equal to alpha (binding equilibrium)
@@ -44,7 +46,7 @@ def solveDiscrete(p,t,N):
     P0 = np.zeros(N, dtype=float)
     P0[:] = p.alpha
 
-    return odeint(myODE, P0, t, args=(p,))
+    return odeint(myODE, P0, t, args=(p,num_PF))
 
 
 def read_simulation():
