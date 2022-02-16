@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 """
-A script to evolve the discrete system for 25 seconds and record the speed at each time point in a text file.
+A script to evolve the discrete system for 50 seconds and record the speed at each time point in a text file.
 First argument is the text file with the parameters
 """
 
@@ -10,19 +10,24 @@ from simulation import Parameters
 from equations import solveDiscrete
 
 
-def main(parameter_file):
+def main(folder):
     print("running in " + os.getcwd())
     p = Parameters()
-    p.read(parameter_file)
-    t = np.linspace(0, 25, 100)
+    p.read(os.path.join(folder,'config.txt'))
+    
+    # Here we use a dt of 1./4 seconds
+    t = np.linspace(0, 50, 200)
     solution = solveDiscrete(p, t, 400)
-    speed = p.omega * (1 - solution[:, 0] * p.omega) * p.a
-    np.savetxt("speed.txt",speed,delimiter=",")
+    
+    # In the solution we export, the dt is 1 second
+    solution = solution[::4,:]
+    np.savetxt(os.path.join(folder,"solution.txt"),solution,delimiter=",")
+    
 
 # ------------------------------------------------------------------------
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] == 'help':
-        main(['.'])
+        main('.')
     else:
         main(sys.argv[1])

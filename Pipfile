@@ -7,8 +7,10 @@ name = "pypi"
 numpy = "*"
 scipy = "*"
 matplotlib = "*"
-preconfig = {editable = true, ref = "master", git = "https://github.com/manulera/preconfig.git"}
 jupyter = "*"
+ipykernel = "*"
+pandas = "*"
+joblib = "*"
 
 [dev-packages]
 

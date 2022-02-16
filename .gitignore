@@ -12,3 +12,5 @@ tex_document/main.synctex.gz
 /__pycache__/
 /scan/
 *.pyc
+/.vscode/
+/parameter_scan/*/scan/

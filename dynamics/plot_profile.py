@@ -16,8 +16,6 @@ p.read("config.txt")
 t = np.linspace(0,25,100)
 solution = solveDiscrete(p,t,400)
 
-speed =p.omega * (1-solution[:,0]*p.omega)*p.a
-
 # fit_sol = curve_fit(expo, t, solution[:,0])
 
 # plt.plot(t,solution[:,0]/solution[0,0])

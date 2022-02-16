@@ -48,7 +48,6 @@ solution = solveDiscrete(p,t,400)
 
 diff,bind,unbind,flux,fluxin,fluxout = term_values(p,solution)
 
-speed =p.omega * (1-solution[:,0]*p.omega)*p.a
 
 # plt.plot(t,speed)
 plt.plot(t,diff,label="diff")

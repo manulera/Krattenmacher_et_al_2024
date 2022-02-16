@@ -35,7 +35,6 @@ for kon in [0.01]:
     t = np.linspace(0,2,1000000)
     solution = solveDiscrete(p,t,400)
 
-    speed =p.omega * (1-solution[:,0]*p.omega)*p.a
 
     # fit_sol = curve_fit(expo, t, solution[:,0])
 
