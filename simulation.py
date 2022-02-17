@@ -62,6 +62,9 @@ class Parameters:
         # Unbinding rate of Ase1
         self.koff = 0.
 
+        # Cooperativity
+        self.cooperativity = 1
+
         # Initial conditions ==========================================================
 
         # This could be in a different object, but for now we can treat it as a parameter:
@@ -134,6 +137,9 @@ class Parameters:
 
                     elif ls[0] == "t_snap":
                         self.t_snap = float(ls[1])
+                    
+                    elif ls[0] == "cooperativity":
+                        self.cooperativity = int(ls[1])
 
                     else:
                         raise ValueError("Unkwon parameter: " + ls[0])
@@ -162,6 +168,7 @@ class Parameters:
         out += "do_equilibration = %u\n" % self.do_equilibration
         out += "t_max = %f\n" % self.t_max
         out += "t_snap = %f\n" % self.t_snap
+        out += "cooperativity = %i\n" % self.cooperativity
 
     def print_for_file(self):
         """
@@ -169,9 +176,9 @@ class Parameters:
         :return:
         """
         out = ""
-        out+="a|v_s|omega|D|kon|koff|L_init|do_equilibration|t_max|t_snap\n"
+        out+="a|v_s|omega|D|kon|koff|L_init|do_equilibration|t_max|t_snap|cooperativity\n"
 
-        extra = [self.a,self.v_s,self.omega,self.D,self.kon,self.koff,self.L_init,self.do_equilibration,self.t_max,self.t_snap]
+        extra = [self.a,self.v_s,self.omega,self.D,self.kon,self.koff,self.L_init,self.do_equilibration,self.t_max,self.t_snap,self.cooperativity]
         extra = map(str,extra)
 
         out+= "|".join(extra)+"\n"

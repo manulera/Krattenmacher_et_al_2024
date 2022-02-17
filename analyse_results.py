@@ -31,10 +31,21 @@ def main(folder):
     p = Parameters()
     p.read(os.path.join(folder,"config.txt"))
     solution = np.genfromtxt(os.path.join(folder,"solution.txt"),delimiter=',')
-    t = np.arange(0,50,1)
+    t = np.arange(0,200,1)
     
-    # We calculate and export the shrinking speed
-    speed = p.v_s * (1 - solution[:, 0] * p.omega)
+    # The speed is slow if any of the sites is occupied.
+    if p.cooperativity>0:
+        P_allfree = 1
+        for i in range(p.cooperativity):
+            P_allfree*=(1-solution[:, i])
+
+    # Stronger cooperativity, also the neighbours
+    else:
+        P_allfree = 1
+        for i in range(-p.cooperativity):
+            P_allfree *= np.power((1-solution[:, i]),3)
+
+    speed = p.v_s * P_allfree + p.v_s * (1-P_allfree) * (1.-p.omega)
     np.savetxt(os.path.join(folder,"speed.txt"),speed,delimiter=",")
     
     # We also calculate its decay
@@ -59,7 +70,7 @@ def main(folder):
         out.write(f'{speed[-1]},{velocity_decay_timescale},{p.alpha},{lengthscale_P},{lengthscale_L},{timescale_P},{timescale_T}\n')
     
     with open(os.path.join(folder,"parameters_table.txt"),"w") as out:
-        out.write(f'omega\n{p.omega}\n')
+        out.write(f'omega,cooperativity\n{p.omega},{p.cooperativity}\n')
     
 
 # ------------------------------------------------------------------------

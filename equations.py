@@ -36,6 +36,55 @@ def myODE(P, t,p):
 
     return dP
 
+def myODE_cooperativity(P, t,p):
+    
+    k0 = p.depol_rate
+    kh = p.k_D/2
+    kon = p.kon
+    koff = p.koff
+    omega = p.omega
+
+    dP = np.zeros_like(P)
+    
+    # The speed is slow if any of the sites is occupied.
+    if p.cooperativity>0:
+        P_allfree = 1
+        for i in range(p.cooperativity):
+            P_allfree*=(1-P[i])
+
+    # Stronger cooperativity, also the neighbours
+    else:
+        P_allfree = 1
+        for i in range(-p.cooperativity):
+            P_allfree *= np.power((1-P[i]),3)
+
+    kd = k0 * P_allfree + k0 * (1-P_allfree) * (1.-omega)
+
+    # For all except position 1 and position N-1
+    
+    # dPN/dt as shown in the paper
+    dP[-1] = 0
+
+    # The term k0 * P[0] * (1. - omega) stays the same even with cooperativity,
+    # because probability is only lost when there is a molecule there, hence the P[0]
+    # and if the molecule is there, the rate is necessarily k0(1-omega) because not all
+    # sites are free
+
+    # dP1/dt as shown in the paper
+    dP[0] = kh * (P[1]-P[0]) - P[0] * koff + (1. - P[0]) * kon + kd * P[1] - k0 * P[0] * (1. - omega)
+
+    # Pi (excluding 1 and N-1)
+    Pi = P[1:-1]
+    # Pi+1
+    Pip1 = P[2:]
+    # Pi-1
+    Pim1 = P[:-2]
+
+    # dPi/dt as shown in the paper
+    dP[1:-1] = kh * (Pip1 + Pim1 - 2 * Pi) - Pi * koff + (1. - Pi) * kon + kd * (Pip1 - Pi)
+
+    return dP
+
 def solveDiscrete(p,t,N):
     """
     Calculates the evolution of P with the differential equation myODE, starting from all the lattice sites
@@ -43,8 +92,10 @@ def solveDiscrete(p,t,N):
     """
     P0 = np.zeros(N, dtype=float)
     P0[:] = p.alpha
-
-    return odeint(myODE, P0, t, args=(p,))
+    if p.cooperativity == 1:
+        return odeint(myODE, P0, t, args=(p,))
+    else:
+        return odeint(myODE_cooperativity, P0, t, args=(p,))
 
 
 def read_simulation():

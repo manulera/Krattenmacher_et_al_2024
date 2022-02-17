@@ -80,7 +80,7 @@ xx,yy=aveline(df.t,df.number_of_Ase1_norm,range(0,60,5))
 plt.scatter(xx,yy,c='black',zorder=1000)
 
 # Fits
-t = np.linspace(0,50)
+t = np.linspace(0,200)
 P = float(fits.accumulation_norm_end_fit)
 T = float(fits.accumulation_norm_timescale)
 y_fit = accumulationFit(t,P,T)
@@ -106,7 +106,7 @@ xx,yy=aveline(df.t[logi],df.velocity[logi],range(0,60,5))
 plt.scatter(xx,yy,c='black',zorder=1000)
 print(np.min(df.t[logi]))
 # Fits
-t = np.linspace(7.5,50)
+t = np.linspace(7.5,200)
 T = float(fits.velocity_T)
 v_s_fit = float(fits.v_s_fit)
 shrinking_speed_steady_state = float(fits.shrinking_speed_steady_state)

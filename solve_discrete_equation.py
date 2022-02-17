@@ -16,7 +16,7 @@ def main(folder):
     p.read(os.path.join(folder,'config.txt'))
     
     # Here we use a dt of 1./4 seconds
-    t = np.linspace(0, 50, 200)
+    t = np.linspace(0, 200, 800)
     solution = solveDiscrete(p, t, 400)
     
     # In the solution we export, the dt is 1 second

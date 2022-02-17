@@ -26,7 +26,7 @@ def main(folder):
     l = np.arange(0,400)
     decay_fit = lengthScaleFitFunction(l,value_dict['P0_end_fit'],value_dict['lengthscale_density_end_fit']) + p.alpha
 
-    t = np.arange(0,50)
+    t = np.arange(0,200)
     accum_fit = timeScaleFitFunction(t,value_dict['accumulation_end_fit'],value_dict['accumulation_timescale'])
 
     plt.figure()
