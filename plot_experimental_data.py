@@ -6,7 +6,7 @@ from pandas import read_csv
 
 # %% Extra functions
 
-cmap = get_cmap('Spectral')
+cmap = get_cmap('viridis')
 
 def getColorFromId(id,N):
     # if id == 1:
@@ -55,18 +55,6 @@ plt.xlabel("time")
 
 
 # %% Colouring by event
-plt.figure()
-N = np.max(df.event)-1
-for trace in np.unique(df['trace']):
-    logi = df['trace']==trace
-    this_df = df[logi]
-    plt.plot(this_df.t,this_df.number_of_Ase1,c=getColorFromId(this_df.event.iat[0],N))
-
-# Binned data
-xx,yy=aveline(df.t,df.number_of_Ase1,range(0,60,5))
-plt.scatter(xx,yy,c='black',zorder=1000)
-plt.ylabel("number of Ase1")
-plt.xlabel("time")
 
 plt.figure()
 N = np.max(df.event)-1
@@ -77,21 +65,45 @@ for trace in np.unique(df['trace']):
 
 # Binned data
 xx,yy=aveline(df.t,df.number_of_Ase1_norm,range(0,60,5))
-plt.scatter(xx,yy,c='black',zorder=1000)
+plt.scatter(xx,yy,c='black',zorder=1000,label='binned')
 
 # Fits
-t = np.linspace(0,200)
+t = np.linspace(0,50)
 P = float(fits.accumulation_norm_end_fit)
 T = float(fits.accumulation_norm_timescale)
 y_fit = accumulationFit(t,P,T)
 
-plt.plot(t,y_fit,c='black',lw=3)
+plt.plot(t,y_fit,c='black',lw=3,label='fit')
 
 
 plt.ylabel("number of Ase1 norm")
 plt.xlabel("time")
+plt.legend()
+plt.savefig(f'experimental_data/{which_folder}_accumulation_norm.svg')
 
-#%%
+plt.figure()
+N = np.max(df.event)-1
+for trace in np.unique(df['trace']):
+    logi = df['trace']==trace
+    this_df = df[logi]
+    plt.plot(this_df.t,this_df.number_of_Ase1,c=getColorFromId(this_df.event.iat[0],N))
+
+# Binned data
+xx,yy=aveline(df.t,df.number_of_Ase1,range(0,60,5))
+plt.scatter(xx,yy,c='black',zorder=1000,label='binned')
+
+# Fits
+t = np.linspace(0,50)
+P = float(fits.accumulation_end_fit)
+T = float(fits.accumulation_timescale)
+y_fit = accumulationFit(t,P,T)
+plt.plot(t,y_fit,c='black',lw=3,label='fit')
+
+plt.ylabel("number of Ase1")
+plt.xlabel("time")
+plt.legend()
+plt.savefig(f'experimental_data/{which_folder}_accumulation.svg')
+
 plt.figure()
 N = np.max(df.event)-1
 timepoint_cut = 2
@@ -103,21 +115,21 @@ for trace in np.unique(df['trace']):
     plt.plot(this_df.t,this_df.velocity,c=getColorFromId(this_df.event.iat[0],N))
 logi = df['timepoint']>timepoint_cut
 xx,yy=aveline(df.t[logi],df.velocity[logi],range(0,60,5))
-plt.scatter(xx,yy,c='black',zorder=1000)
+plt.scatter(xx,yy,c='black',zorder=1000,label='binned')
 print(np.min(df.t[logi]))
 # Fits
-t = np.linspace(7.5,200)
-T = float(fits.velocity_T)
+t = np.linspace(7.5,50)
+T = float(fits.velocity_decay_timescale)
 v_s_fit = float(fits.v_s_fit)
 shrinking_speed_steady_state = float(fits.shrinking_speed_steady_state)
 print(v_s_fit,shrinking_speed_steady_state,T)
 y_fit = velocityFit(t,v_s_fit,shrinking_speed_steady_state,T)
-y_fit2 = velocityFit(t,130,110,15)
-plt.plot(t,y_fit,c='black',lw=3)
-plt.plot(t,y_fit2,c='gray',lw=3)
+plt.plot(t,y_fit,c='black',lw=3,label='fit')
 
 plt.ylabel("Velocity")
 plt.xlabel("time")
+plt.legend()
+plt.savefig(f'experimental_data/{which_folder}_speed.svg')
 
 
 
@@ -159,7 +171,7 @@ for trace in np.unique(df['trace']):
     plt.plot(this_df.t,this_df.tau,c=getColorFromId(this_df.event.iat[0],N))
 
 xx,yy=aveline(df.t,df.tau,range(0,60,5))
-plt.scatter(xx,yy,c='black',zorder=1000)
+plt.scatter(xx,yy,c='black',zorder=1000,label='binned')
 
 plt.ylabel("tau")
 plt.xlabel("time")
