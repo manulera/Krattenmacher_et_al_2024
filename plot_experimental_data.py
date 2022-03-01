@@ -80,7 +80,7 @@ xx,yy=aveline(df.t,df.number_of_Ase1_norm,range(0,60,5))
 plt.scatter(xx,yy,c='black',zorder=1000)
 
 # Fits
-t = np.linspace(0,200)
+t = np.linspace(0,70)
 P = float(fits.accumulation_norm_end_fit)
 T = float(fits.accumulation_norm_timescale)
 y_fit = accumulationFit(t,P,T)
@@ -90,6 +90,30 @@ plt.plot(t,y_fit,c='black',lw=3)
 
 plt.ylabel("number of Ase1 norm")
 plt.xlabel("time")
+
+plt.figure()
+N = np.max(df.event)-1
+for trace in np.unique(df['trace']):
+    logi = df['trace']==trace
+    this_df = df[logi]
+    plt.plot(this_df.t,this_df.number_of_Ase1,c=getColorFromId(this_df.event.iat[0],N))
+
+# Binned data
+xx,yy=aveline(df.t,df.number_of_Ase1,range(0,60,5))
+plt.scatter(xx,yy,c='black',zorder=1000)
+
+# Fits
+t = np.linspace(0,70)
+P = float(fits.accumulation_end_fit)
+T = float(fits.accumulation_timescale)
+y_fit = accumulationFit(t,P,T)
+
+plt.plot(t,y_fit,c='black',lw=3)
+
+
+plt.ylabel("number of Ase1")
+plt.xlabel("time")
+
 
 #%%
 plt.figure()
@@ -106,15 +130,13 @@ xx,yy=aveline(df.t[logi],df.velocity[logi],range(0,60,5))
 plt.scatter(xx,yy,c='black',zorder=1000)
 print(np.min(df.t[logi]))
 # Fits
-t = np.linspace(7.5,200)
-T = float(fits.velocity_T)
+t = np.linspace(7.5,70)
+T = float(fits.velocity_decay_timescale)
 v_s_fit = float(fits.v_s_fit)
 shrinking_speed_steady_state = float(fits.shrinking_speed_steady_state)
 print(v_s_fit,shrinking_speed_steady_state,T)
 y_fit = velocityFit(t,v_s_fit,shrinking_speed_steady_state,T)
-y_fit2 = velocityFit(t,130,110,15)
 plt.plot(t,y_fit,c='black',lw=3)
-plt.plot(t,y_fit2,c='gray',lw=3)
 
 plt.ylabel("Velocity")
 plt.xlabel("time")
