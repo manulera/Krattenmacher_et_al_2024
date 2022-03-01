@@ -2,6 +2,10 @@
 
 ## What we are trying to reproduce
 
+<<<<<<< HEAD
+If I understand correctly, we would be trying to reproduce the following magnitudes from the experiments:
+
+=======
 I think we could aim to reproduce the following from the experiment:
 
 ### Accumulation of Ase1
@@ -98,3 +102,4 @@ svg" width="300">
 ## Adding cooperativity
 
 The problem with the simple model is indeed that the effect on the speed is too small for the amount of accumulated Ase1. So we can say that more binding sites are involved
+>>>>>>> 20640806220d743c3c0528737ea2bd6fe36c6854

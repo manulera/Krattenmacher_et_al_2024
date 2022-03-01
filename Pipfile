@@ -12,7 +12,6 @@ ipykernel = "*"
 pandas = "*"
 joblib = "*"
 
-[dev-packages]
 
 [requires]
 python_version = "3.9"
