@@ -2,6 +2,29 @@ import numpy as np
 from scipy.integrate import odeint
 from scipy.optimize import fsolve
 
+def scaleVelocity(P,omega,cooperativity,cooperativity_mode):
+    
+    if cooperativity_mode == 'none':
+        return (1.-P[0]) + P[0] * (1.-omega)
+    
+    # The speed is slow if any of the first N sites is occupied.
+    elif cooperativity_mode == 'protofilament':
+        P_allfree = 1
+        for i in range(cooperativity):
+            P_allfree*=(1-P[i])
+    
+    # Phenomenological model
+    elif cooperativity_mode == 'exponent':
+        P_allfree=np.power(1-P[0],cooperativity)
+    
+    # Mixed model
+    elif cooperativity_mode == 'mixed':
+        P_allfree = 1
+        for i in range(cooperativity):
+            P_allfree *= np.power((1-P[i]),3)
+    
+    return P_allfree + (1-P_allfree) * (1.-omega)
+
 def myODE(P, t,p):
     """
     Discrete differential equation dP/dt, with the special cases of P1 and PN, as shown in the paper
@@ -57,8 +80,8 @@ def myODE_cooperativity(P, t,p):
         P_allfree = 1
         for i in range(-p.cooperativity):
             P_allfree *= np.power((1-P[i]),3)
-
-    kd = k0 * P_allfree + k0 * (1-P_allfree) * (1.-omega)
+    
+    kd = k0 * scaleVelocity(P,omega,p.cooperativity,p.cooperativity_mode)
 
     # For all except position 1 and position N-1
     
@@ -92,10 +115,7 @@ def solveDiscrete(p,t,N):
     """
     P0 = np.zeros(N, dtype=float)
     P0[:] = p.alpha
-    if p.cooperativity == 1:
-        return odeint(myODE, P0, t, args=(p,))
-    else:
-        return odeint(myODE_cooperativity, P0, t, args=(p,))
+    return odeint(myODE_cooperativity, P0, t, args=(p,))
 
 
 def read_simulation():

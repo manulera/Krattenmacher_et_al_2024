@@ -2,6 +2,7 @@
 # n = 0
 
 cooperativity = [[ [1,2,3,4] ]]
+cooperativity_mode = protofilament
 
 # Lattice size
 a = 0.008

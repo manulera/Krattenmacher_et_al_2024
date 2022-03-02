@@ -1,8 +1,8 @@
 ## Preconfig -------------------
 # n = 0
 
-cooperativity = [[ [1,-2,-3,-4] ]]
-
+cooperativity = [[ [1,2,3,4] ]]
+cooperativity_mode = mixed
 # Lattice size
 a = 0.008
 # Velocity of shrinkage of the MT in absence of Ase1 (From table)

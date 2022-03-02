@@ -11,9 +11,11 @@ A script to calculate derived quantities from the solution of the discrete equat
         - Timescale (T) of the accumulation of ase1 in time (t), from a fit to P * (1-exp(-t/T))
 """
 
+from re import L
 import sys, os
 import numpy as np
 from simulation import Parameters
+from equations import scaleVelocity
 from scipy.optimize import curve_fit
 
 def timeScaleFitFunction(t,P,T):
@@ -32,20 +34,11 @@ def main(folder):
     p.read(os.path.join(folder,"config.txt"))
     solution = np.genfromtxt(os.path.join(folder,"solution.txt"),delimiter=',')
     t = np.arange(0,200,1)
-    
-    # The speed is slow if any of the sites is occupied.
-    if p.cooperativity>0:
-        P_allfree = 1
-        for i in range(p.cooperativity):
-            P_allfree*=(1-solution[:, i])
 
-    # Stronger cooperativity, also the neighbours
-    else:
-        P_allfree = 1
-        for i in range(-p.cooperativity):
-            P_allfree *= np.power((1-solution[:, i]),3)
-
-    speed = p.v_s * P_allfree + p.v_s * (1-P_allfree) * (1.-p.omega)
+    # Better to do this in a loop than to duplicate the code on how to calculate the speed
+    speed = np.zeros_like(t,dtype=float)
+    for i in range(len(speed)):
+        speed[i] = p.v_s * scaleVelocity(solution[i,:],p.omega,p.cooperativity,p.cooperativity_mode)
     np.savetxt(os.path.join(folder,"speed.txt"),speed,delimiter=",")
     
     # We also calculate its decay

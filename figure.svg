@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="223.158mm"
+   height="183.53583mm"
+   viewBox="0 0 223.158 183.53583"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.2 (e86c8708, 2021-01-15)"
+   sodipodi:docname="figure.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="300.02385"
+     inkscape:cy="506.11397"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1252"
+     inkscape:window-height="790"
+     inkscape:window-x="72"
+     inkscape:window-y="318"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-0.29354858,-1.2223015)">
+    <image
+       sodipodi:absref="/Users/Manu/Documents/Projects/Krattenmacher2021/cartoon.svg"
+       xlink:href="cartoon.svg"
+       y="2.1138666"
+       x="0.29440865"
+       id="image1051"
+       height="33.569881"
+       width="138.62386"
+       inkscape:svg-dpi="96"
+       preserveAspectRatio="none" />
+    <image
+       sodipodi:absref="/Users/Manu/Documents/Projects/Krattenmacher2021/parameter_scan/runs_coop1/plots/accumulation_end_fit.svg"
+       xlink:href="parameter_scan/runs_coop1/plots/accumulation_end_fit.svg"
+       y="35.98613"
+       x="74.67955"
+       id="image9359"
+       height="74.386002"
+       width="74.386002"
+       inkscape:svg-dpi="96"
+       preserveAspectRatio="none" />
+    <image
+       sodipodi:absref="/Users/Manu/Documents/Projects/Krattenmacher2021/parameter_scan/runs_coop1/plots/accumulation_timescale.svg"
+       xlink:href="parameter_scan/runs_coop1/plots/accumulation_timescale.svg"
+       y="35.98613"
+       x="0.29411873"
+       id="image13018"
+       height="74.386002"
+       width="74.386002"
+       inkscape:svg-dpi="96"
+       preserveAspectRatio="none" />
+    <image
+       sodipodi:absref="/Users/Manu/Documents/Projects/Krattenmacher2021/parameter_scan/runs_coop1/plots/shrinking_speed_steady_state.svg"
+       xlink:href="parameter_scan/runs_coop1/plots/shrinking_speed_steady_state.svg"
+       y="35.98613"
+       x="149.06555"
+       id="image16550"
+       height="74.386002"
+       width="74.386002"
+       inkscape:svg-dpi="96"
+       preserveAspectRatio="none" />
+    <g
+       id="g19611"
+       transform="translate(-8.3154762,4.3467262)">
+      <rect
+         style="fill:#ffffff;stroke-width:0.528578;stroke-linejoin:round;stop-color:#000000"
+         id="rect19606"
+         width="22.44739"
+         height="3.8742564"
+         x="27.428061"
+         y="35.745911"
+         ry="1.9371282" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.40675px;line-height:0;font-family:arial;-inkscape-font-specification:arial;text-align:center;text-anchor:middle;stroke-width:0.212922"
+         x="38.752071"
+         y="38.563835"
+         id="text19604"><tspan
+           sodipodi:role="line"
+           id="tspan19602"
+           x="38.752071"
+           y="38.563835"
+           style="stroke-width:0.212922">no cooperation</tspan></text>
+    </g>
+    <g
+       id="g19611-0"
+       transform="translate(69.743851,4.3073157)">
+      <rect
+         style="fill:#ffffff;stroke-width:0.528578;stroke-linejoin:round;stop-color:#000000"
+         id="rect19606-4"
+         width="22.44739"
+         height="3.8742564"
+         x="27.428061"
+         y="35.745911"
+         ry="1.9371282" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.40675px;line-height:0;font-family:arial;-inkscape-font-specification:arial;text-align:center;text-anchor:middle;stroke-width:0.212922"
+         x="38.752071"
+         y="38.563835"
+         id="text19604-3"><tspan
+           sodipodi:role="line"
+           id="tspan19602-6"
+           x="38.752071"
+           y="38.563835"
+           style="stroke-width:0.212922">no cooperation</tspan></text>
+    </g>
+    <g
+       id="g19611-4"
+       transform="translate(141.37033,43.994815)">
+      <rect
+         style="fill:#ffffff;stroke-width:0.528578;stroke-linejoin:round;stop-color:#000000"
+         id="rect19606-2"
+         width="22.44739"
+         height="3.8742564"
+         x="27.428061"
+         y="35.745911"
+         ry="1.9371282" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.40675px;line-height:0;font-family:arial;-inkscape-font-specification:arial;text-align:center;text-anchor:middle;stroke-width:0.212922"
+         x="38.752071"
+         y="38.563835"
+         id="text19604-8"><tspan
+           sodipodi:role="line"
+           id="tspan19602-7"
+           x="38.752071"
+           y="38.563835"
+           style="stroke-width:0.212922">no cooperation</tspan></text>
+    </g>
+    <image
+       sodipodi:absref="/Users/Manu/Documents/Projects/Krattenmacher2021/parameter_scan/runs_special_coop1/plots/accumulation_end_fit.svg"
+       xlink:href="parameter_scan/runs_special_coop1/plots/accumulation_end_fit.svg"
+       y="110.37213"
+       x="74.67955"
+       id="image37747"
+       height="74.386002"
+       width="74.386002"
+       inkscape:svg-dpi="96"
+       preserveAspectRatio="none" />
+    <image
+       sodipodi:absref="/Users/Manu/Documents/Projects/Krattenmacher2021/parameter_scan/runs_special_coop1/plots/accumulation_timescale.svg"
+       xlink:href="parameter_scan/runs_special_coop1/plots/accumulation_timescale.svg"
+       y="110.37213"
+       x="0.29354858"
+       id="image39971"
+       height="74.386002"
+       width="74.386002"
+       inkscape:svg-dpi="96"
+       preserveAspectRatio="none" />
+    <image
+       sodipodi:absref="/Users/Manu/Documents/Projects/Krattenmacher2021/parameter_scan/runs_special_coop1/plots/shrinking_speed_steady_state.svg"
+       xlink:href="parameter_scan/runs_special_coop1/plots/shrinking_speed_steady_state.svg"
+       y="110.37213"
+       x="149.06555"
+       id="image44253"
+       height="74.386002"
+       width="74.386002"
+       inkscape:svg-dpi="96"
+       preserveAspectRatio="none" />
+    <image
+       sodipodi:absref="/Users/Manu/Documents/Projects/Krattenmacher2021/simulated_kymograph.svg"
+       xlink:href="simulated_kymograph.svg"
+       y="1.2223015"
+       x="149.06555"
+       id="image86500"
+       height="34.763828"
+       width="69.527657"
+       inkscape:svg-dpi="96"
+       preserveAspectRatio="none" />
+  </g>
+</svg>

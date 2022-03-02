@@ -3,10 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.cm import get_cmap
 from pandas import read_csv
-
+import seaborn as sns
 # %% Extra functions
 
-cmap = get_cmap('viridis')
+cmap = sns.color_palette("rocket", as_cmap=True)
 
 def getColorFromId(id,N):
     # if id == 1:
@@ -43,20 +43,20 @@ fits = read_csv(f'experimental_data/{which_folder}_fits.csv')
 
 # %% Some plots showing that the first or second does not really matter
 
-plt.figure()
+plt.figure(figsize=[4,4])
 max_trace_count = np.max(df.trace_count)-1
 for trace in np.unique(df['trace']):
     logi = df['trace']==trace
     this_df = df[logi]
     plt.plot(this_df.t,this_df.number_of_Ase1,c=getColorFromId(this_df.trace_count.iat[0],max_trace_count))
 
-plt.ylabel("number of Ase1")
-plt.xlabel("time")
+plt.ylabel("Ase1 accumulation")
+plt.xlabel("Time (s)")
 
 
 # %% Colouring by event
 
-plt.figure()
+plt.figure(figsize=[4,4])
 N = np.max(df.event)-1
 for trace in np.unique(df['trace']):
     logi = df['trace']==trace
@@ -79,9 +79,10 @@ plt.plot(t,y_fit,c='black',lw=3,label='fit')
 plt.ylabel("number of Ase1 norm")
 plt.xlabel("time")
 plt.legend()
+plt.tight_layout()
 plt.savefig(f'experimental_data/{which_folder}_accumulation_norm.svg')
 
-plt.figure()
+plt.figure(figsize=[4,4])
 N = np.max(df.event)-1
 for trace in np.unique(df['trace']):
     logi = df['trace']==trace
@@ -99,12 +100,13 @@ T = float(fits.accumulation_timescale)
 y_fit = accumulationFit(t,P,T)
 plt.plot(t,y_fit,c='black',lw=3,label='fit')
 
-plt.ylabel("number of Ase1")
-plt.xlabel("time")
+plt.ylabel("Ase1 accumulation")
+plt.xlabel("Time (s)")
 plt.legend()
+plt.tight_layout()
 plt.savefig(f'experimental_data/{which_folder}_accumulation.svg')
 
-plt.figure()
+plt.figure(figsize=[4,4])
 N = np.max(df.event)-1
 timepoint_cut = 2
 for trace in np.unique(df['trace']):
@@ -112,10 +114,10 @@ for trace in np.unique(df['trace']):
     if not np.any(logi):
         continue
     this_df = df[logi]
-    plt.plot(this_df.t,this_df.velocity,c=getColorFromId(this_df.event.iat[0],N))
+    plt.plot(this_df.t,this_df.velocity/1000.,c=getColorFromId(this_df.event.iat[0],N))
 logi = df['timepoint']>timepoint_cut
 xx,yy=aveline(df.t[logi],df.velocity[logi],range(0,60,5))
-plt.scatter(xx,yy,c='black',zorder=1000,label='binned')
+plt.scatter(xx,np.array(yy)/1000.,c='black',zorder=1000,label='binned')
 print(np.min(df.t[logi]))
 # Fits
 t = np.linspace(7.5,50)
@@ -124,18 +126,19 @@ v_s_fit = float(fits.v_s_fit)
 shrinking_speed_steady_state = float(fits.shrinking_speed_steady_state)
 print(v_s_fit,shrinking_speed_steady_state,T)
 y_fit = velocityFit(t,v_s_fit,shrinking_speed_steady_state,T)
-plt.plot(t,y_fit,c='black',lw=3,label='fit')
+plt.plot(t,y_fit/1000.,c='black',lw=3,label='fit')
 
-plt.ylabel("Velocity")
-plt.xlabel("time")
+plt.ylabel("Velocity (\u03BCm/s)")
+plt.xlabel("Time (s)")
 plt.legend()
+plt.tight_layout()
 plt.savefig(f'experimental_data/{which_folder}_speed.svg')
 
 
 
 # %% Plot median speed with the median intensity
 
-plt.figure()
+plt.figure(figsize=[4,4])
 
 N = np.max(df.event)-1
 for trace in np.unique(df['trace']):
@@ -149,7 +152,7 @@ for trace in np.unique(df['trace']):
 
 # %% Plot median speed with duration (discard that longer ones make the speed lower)
 
-plt.figure()
+plt.figure(figsize=[4,4])
 
 N = np.max(df.event)-1
 for trace in np.unique(df['trace']):
@@ -163,7 +166,7 @@ plt.ylim(ymin=0)
 
 
 # %% Plot the tau
-plt.figure()
+plt.figure(figsize=[4,4])
 N = np.max(df.event)-1
 for trace in np.unique(df['trace']):
     logi = df['trace']==trace

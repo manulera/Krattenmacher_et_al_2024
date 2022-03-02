@@ -70,7 +70,7 @@ The model without modifications. In the figures below each dot is the result of 
 To estimate the best fit, for each pair of the experimental (E) and simulation (S) values, I calculate a goodness of fit:
 $$ \frac{(E-S)}{E}^2$$
 
-Then, to i either do the arithmetic or geometric mean of all the coefficients, results below.
+Then, we either do the arithmetic or geometric mean of the coefficients `'accumulation_end_fit','accumulation_timescale','shrinking_speed_steady_state'`, results below.
 
 <img src="./parameter_scan/runs1//plots/fitness_geometric.svg" width="300">
 <img src="./parameter_scan/runs1//plots/fitness_sum.

@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Delete old data if it exists
+rm $1/scan/run*/*.txt
+rmdir $1/scan/run*
+rm $1/scan/.DS_Store
+rmdir $1/scan
+
 # Make directory to put the files
 mkdir $1/scan
 

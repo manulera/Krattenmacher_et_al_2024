@@ -65,6 +65,9 @@ class Parameters:
         # Cooperativity
         self.cooperativity = 1
 
+        # Cooperativity mode: `none`, `protofilament`, `exponent` or `mixed`
+        self.cooperativity_mode = 'none'
+
         # Initial conditions ==========================================================
 
         # This could be in a different object, but for now we can treat it as a parameter:
@@ -140,6 +143,9 @@ class Parameters:
                     
                     elif ls[0] == "cooperativity":
                         self.cooperativity = int(ls[1])
+                    
+                    elif ls[0] == "cooperativity_mode":
+                        self.cooperativity_mode = ls[1].strip()
 
                     else:
                         raise ValueError("Unkwon parameter: " + ls[0])
@@ -169,6 +175,7 @@ class Parameters:
         out += "t_max = %f\n" % self.t_max
         out += "t_snap = %f\n" % self.t_snap
         out += "cooperativity = %i\n" % self.cooperativity
+        out += "cooperativity_mode = %s\n" % self.cooperativity_mode
 
     def print_for_file(self):
         """

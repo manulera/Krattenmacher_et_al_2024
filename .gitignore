@@ -14,4 +14,3 @@ tex_document/main.synctex.gz
 *.pyc
 /.vscode/
 /parameter_scan/*/scan/
-*.svg
