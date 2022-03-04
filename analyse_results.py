@@ -42,7 +42,7 @@ def main(folder):
     np.savetxt(os.path.join(folder,"speed.txt"),speed,delimiter=",")
     
     # We also calculate its decay
-    fit,_ = curve_fit(velocityFit,t,speed,[speed[0]-speed[-1],speed[-1],6])
+    fit,_ = curve_fit(velocityFit,t,speed,[speed[0]-speed[-1],speed[-1],1])
     _,_, velocity_decay_timescale = tuple(fit)
     
     # We calculate and export the accumulated ase1 (over the equilibrium value, alpha)
@@ -51,7 +51,7 @@ def main(folder):
     np.savetxt(os.path.join(folder,"ase1_accumulation.txt"),accum,delimiter=",")
 
     # We export a csv with the single values
-    fit,_ = curve_fit(timeScaleFitFunction,t,accum,[accum[-1],20])
+    fit,_ = curve_fit(timeScaleFitFunction,t,accum,[accum[-1],1])
     timescale_P, timescale_T = tuple(fit)
 
     l = np.arange(0,400)

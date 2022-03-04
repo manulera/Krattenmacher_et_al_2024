@@ -69,18 +69,7 @@ def myODE_cooperativity(P, t,p):
 
     dP = np.zeros_like(P)
     
-    # The speed is slow if any of the sites is occupied.
-    if p.cooperativity>0:
-        P_allfree = 1
-        for i in range(p.cooperativity):
-            P_allfree*=(1-P[i])
-
-    # Stronger cooperativity, also the neighbours
-    else:
-        P_allfree = 1
-        for i in range(-p.cooperativity):
-            P_allfree *= np.power((1-P[i]),3)
-    
+    # The scaleVelocity function adjust kd depending on the model
     kd = k0 * scaleVelocity(P,omega,p.cooperativity,p.cooperativity_mode)
 
     # For all except position 1 and position N-1

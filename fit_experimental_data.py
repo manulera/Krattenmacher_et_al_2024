@@ -1,7 +1,7 @@
 #%%
 import numpy as np
 from pandas import read_csv, DataFrame
-from scipy.optimize import minimize
+from scipy.optimize import minimize, curve_fit
 
 
 def accumulationFit(t,P,T):
@@ -9,33 +9,37 @@ def accumulationFit(t,P,T):
 
 def velocityFit(t,P0,Pend,T):
     return  P0 * np.exp(-t / T) + Pend
-    
-def least_squares_fitting(f,x,y,sugg):
-
-    def weightFun(args):
-        return np.sum(np.square(f(x,*args) - y))
-    
-    return minimize(weightFun,sugg)
 
 
 for f in ['single','AP']:
     df = read_csv(f'experimental_data/data_{f}.csv')
 
+    sugg = {
+        'single': [700,20],
+        'AP': [200,30]
+    }
+
     # Fit the timescale to the normalised data
     logi = np.logical_not(np.isnan(df.number_of_Ase1_norm))
-    res = least_squares_fitting(accumulationFit,df.t[logi],df.number_of_Ase1_norm[logi],[700,20])
-    params_accum_norm = res.x
+    params_accum_norm,_ = curve_fit(accumulationFit,df.t[logi],df.number_of_Ase1_norm[logi],sugg[f])
     
     # Fit the timescale to the non-normalised data
+    sugg = {
+        'single': [70,20],
+        'AP': [20,30]
+    }
     logi = np.logical_not(np.isnan(df.number_of_Ase1))
-    res = least_squares_fitting(accumulationFit,df.t[logi],df.number_of_Ase1[logi],[70,20])
-    params_accum = res.x
+    params_accum,_ = curve_fit(accumulationFit,df.t[logi],df.number_of_Ase1[logi],sugg[f])
+
     
     # Fit the timescale to the velocity data (we exclude the first timepoints)
+    sugg = {
+        'single': [130,110,50],
+        'AP': [200,100,20]
+    }
     logi = np.logical_not(np.isnan(df.velocity))
     logi = np.logical_and(logi,np.greater(df.timepoint,2))
-    res = least_squares_fitting(velocityFit,df.t[logi],df.velocity[logi],[130,110,50])
-    params_velocity = res.x
+    params_velocity,_ = curve_fit(velocityFit,df.t[logi],df.velocity[logi],sugg[f])
     
     # Tau should be approximately 200 nm
     value_dict = {

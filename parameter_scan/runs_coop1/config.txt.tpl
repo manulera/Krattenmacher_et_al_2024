@@ -9,7 +9,7 @@ a = 0.008
 # Velocity of shrinkage of the MT in absence of Ase1 (From table)
 v_s = 0.3
 # Probability of preventing depolymerization if Ase1 is there
-omega = [[ [i/20. for i in range(1,21)] ]]
+omega = [[ [i/20. for i in range(0,21)] ]]
 
 # Ase1 ========================================================================
 # Diffusion rate of Ase1

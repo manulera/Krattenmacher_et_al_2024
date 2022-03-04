@@ -1,9 +1,7 @@
 #%%
-from click import style
 import matplotlib.pyplot as plt
 from pandas import read_csv
 import numpy as np
-from matplotlib import cm
 import glob
 import os
 import seaborn as sns
@@ -69,48 +67,62 @@ for folder in folders:
 #%% Plot fitness
 
     # data.plot.scatter('omega','overall_fitness_sum',c=data['cooperativity'],cmap=cmap,sharex=False)    
-    plt.figure(figsize=[4,4])
+    plt.figure(figsize=[3,3])
     sns.lineplot(x='omega', y='overall_fitness_sum', data=data, hue='cooperativity')
     if np.min(data['omega'])>0.5:
         plt.ylim([0,0.5])
+        plt.xlim(xmin=0.7)
+    else:
+        plt.xlim(xmin=0)
     plt.ylim([0,2])
     plt.xlim([np.min(data['omega']),np.max(data['omega'])])
     plt.tight_layout()
     plt.savefig(os.path.join(plot_folder,'fitness_sum.svg'))
     
     # data.plot.scatter('omega','overall_fitness_geometric',c=data['cooperativity'],cmap=cmap,sharex=False)    
-    plt.figure(figsize=[4,4])
+    plt.figure(figsize=[3,3])
     sns.lineplot(x='omega', y='overall_fitness_geometric', data=data, hue='cooperativity')
     if np.min(data['omega'])>0.5:
         plt.ylim([0,0.5])
-    plt.xlim([np.min(data['omega']),np.max(data['omega'])])
+        plt.xlim(xmin=0.7)
+    else:
+        plt.xlim(xmin=0)
+    plt.xlim(xmax=1)
     plt.tight_layout()
     plt.savefig(os.path.join(plot_folder,'fitness_geometric.svg'))
 
     # data.plot.scatter('omega','accumulation_fitness_sum',c=data['cooperativity'],cmap=cmap,sharex=False)    
-    plt.figure(figsize=[4,4])
+    plt.figure(figsize=[3,3])
     sns.lineplot(x='omega', y='accumulation_fitness_sum', data=data, hue='cooperativity')
     if np.min(data['omega'])>0.5:
         plt.ylim([0,0.5])
+        plt.xlim(xmin=0.7)
+    else:
+        plt.xlim(xmin=0)
     plt.ylim([0,2])
-    plt.xlim([np.min(data['omega']),np.max(data['omega'])])
+    plt.xlim(xmax=1)
     plt.tight_layout()
     plt.savefig(os.path.join(plot_folder,'accumulation_fitness_sum.svg'))
     
     # data.plot.scatter('omega','accumulation_fitness_geometric',c=data['cooperativity'],cmap=cmap,sharex=False)    
-    plt.figure(figsize=[4,4])
+    plt.figure(figsize=[3,3])
     sns.lineplot(x='omega', y='accumulation_fitness_geometric', data=data, hue='cooperativity')
     if np.min(data['omega'])>0.5:
         plt.ylim([0,1])
-    plt.xlim([np.min(data['omega']),np.max(data['omega'])])
+        plt.xlim(xmin=0.7)
+    else:
+        plt.xlim(xmin=0)
+    plt.xlim(xmax=1)
     plt.tight_layout()
     plt.savefig(os.path.join(plot_folder,'accumulation_fitness_geometric.svg'))
 
     # data.plot.scatter('omega','shrinking_speed_steady_state_fitness',c=data['cooperativity'],cmap=cmap,sharex=False)    
-    plt.figure(figsize=[4,4])
+    plt.figure(figsize=[3,3])
     sns.lineplot(x='omega', y='shrinking_speed_steady_state_fitness', data=data, hue='cooperativity')
     if np.min(data['omega'])>0.5:
         plt.ylim([0,0.5])
+    else:
+        plt.xlim(xmin=0)
     plt.ylim([0,2])
     plt.xlim([np.min(data['omega']),np.max(data['omega'])])
     plt.tight_layout()
@@ -134,14 +146,17 @@ for folder in folders:
     for column in data:
         if 'fitness' not in column and 'deviation' not in column:
             # data.plot.scatter('omega',column,c=data['cooperativity'],cmap=cmap,sharex=False)    
-            plt.figure(figsize=[4,4])
+            plt.figure(figsize=[3,3])
             sns.lineplot(x='omega', y=column, data=data, hue='cooperativity')
             if column in experimental_summary:
                 exp_value = float(experimental_summary[column])
                 plt.axhline(y=exp_value,label='experimental value',ls='--')
-
+            if np.min(data['omega'])>0.5:
+                plt.xlim(xmin=0.7)
+            else:
+                plt.xlim(xmin=0)
+            plt.xlim(xmax=1)
             plt.ylim(ymin=0)
-            plt.xlim([np.min(data['omega']),np.max(data['omega'])])
             plt.ylabel(ylabelValue(column))
             plt.legend()
             plt.tight_layout()
