@@ -63,7 +63,7 @@ def main(folder):
         out.write(f'{speed[-1]},{velocity_decay_timescale},{p.alpha},{lengthscale_P},{lengthscale_L},{timescale_P},{timescale_T}\n')
     
     with open(os.path.join(folder,"parameters_table.txt"),"w") as out:
-        out.write(f'omega,cooperativity\n{p.omega},{p.cooperativity}\n')
+        out.write(f'omega,cooperativity,kon,v_s\n{p.omega},{p.cooperativity},{p.kon},{p.v_s}\n')
     
 
 # ------------------------------------------------------------------------

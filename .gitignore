@@ -14,3 +14,4 @@ tex_document/main.synctex.gz
 *.pyc
 /.vscode/
 /parameter_scan/*/scan/
+/parameter_scan_overlap/*/scan/
