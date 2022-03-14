@@ -3,7 +3,13 @@ from scipy.integrate import odeint
 from scipy.optimize import fsolve
 
 def scaleVelocity(P,omega,cooperativity,cooperativity_mode):
-    
+    """
+    Apply the scaling factor to the velocity depending of occupancy of the lattice, different for each model.
+     * none: model 1
+     * protofilament: model 2
+     * exponent: not used
+     * mixed: model 3
+    """
     if cooperativity_mode == 'none':
         return (1.-P[0]) + P[0] * (1.-omega)
     
