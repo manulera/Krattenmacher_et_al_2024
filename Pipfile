@@ -9,6 +9,7 @@ scipy = "*"
 matplotlib = "*"
 preconfig = {editable = true, ref = "master", git = "https://github.com/manulera/preconfig.git"}
 jupyter = "*"
+ipykernel = "*"
 
 [dev-packages]
 
