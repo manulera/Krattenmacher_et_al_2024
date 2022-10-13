@@ -6,6 +6,7 @@ depol.txt
 *.svg
 *.png
 *.txt
+*.db
 /run*/
 tex_document/main.aux
 tex_document/main.bbl
