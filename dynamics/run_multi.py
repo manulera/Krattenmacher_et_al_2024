@@ -19,7 +19,7 @@ def run_multiple():
     t = np.linspace(0,100,100)
 
     colorcoded = 'beta_start'
-    colorcodedlabel = 'beta_0 and P_lose'
+    colorcodedlabel = 'beta_0 and P_lose/3'
     norm = matplotlib.colors.Normalize(vmin=0, vmax=0.25)
 
     p = Parameters()
@@ -29,7 +29,7 @@ def run_multiple():
             # p.read('./config/' + os.listdir('./config/')[5])
             p.read('./config/' + filename)
             p.beta = [var, 0]#np.arange(beta_start,0,-beta_step)
-            p.P_lose = var
+            p.P_lose = var * 3
             # p.omega = 0 using P_lose=1-omega instead (is more intuitive for me)
             solution = solveDiscrete(p,t,mt_length)
             velocities = np.apply_along_axis(get_v, 1, solution, p)
