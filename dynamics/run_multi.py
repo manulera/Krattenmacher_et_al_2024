@@ -18,24 +18,19 @@ def run_multiple():
     x = np.arange(0,mt_length*0.008,0.008)
     t = np.linspace(0,100,100)
 
-    beta_start = 0.5
-    beta_step = 0.1
-
-    colorcoded = 'delta'
-    colorcodedlabel = 'delta'
+    colorcoded = 'beta_start'
+    colorcodedlabel = 'beta_0 and P_lose'
     norm = matplotlib.colors.Normalize(vmin=0, vmax=0.25)
 
     p = Parameters()
     counter = 1
     for filename in os.listdir('./config/'):
-        for var in [0, 0.05, 0.1, 0.15, 2]:
+        for var in [0.05, 0.1, 0.15, 0.2]:
             # p.read('./config/' + os.listdir('./config/')[5])
             p.read('./config/' + filename)
-            p.beta = [0,0]#np.arange(beta_start,0,-beta_step)
-            p.P_lose = 0.5
-            p.omega = 0
-            p.gamma = var
-            p.delta = var
+            p.beta = [var, 0]#np.arange(beta_start,0,-beta_step)
+            p.P_lose = var
+            # p.omega = 0 using P_lose=1-omega instead (is more intuitive for me)
             solution = solveDiscrete(p,t,mt_length)
             velocities = np.apply_along_axis(get_v, 1, solution, p)
             v = velocities[:,0]
@@ -49,8 +44,8 @@ def run_multiple():
             t_const = t[belowe[0]] if belowe.size>0 else np.NaN
             print(counter, 'diff:', p.D, ' off from steady state:', (accumulation[-1]-accumulation[-2])/accumulation[-1], 
                 'error in decay length:', np.max(y-ye))
-            dat.append({'alpha':p.alpha, 'beta_start':beta_start, 'beta_step':beta_step, 'omega':p.omega, 'D':p.D, 'koff':p.koff, 'decay_length':d, 't_const':t_const, 'gamma': p.gamma, 'delta':p.delta,
+            dat.append({'alpha':p.alpha, 'beta_start':p.beta[0], 'beta_step':p.beta[0]-p.beta[1], 'omega':p.omega, 'D':p.D, 'koff':p.koff, 'decay_length':d, 't_const':t_const,
                         'v':v, 'v_shift':velocities[:,1], 'v_lose':velocities[:,2], 'p':p, 'accumulation':accumulation, 'solution':solution, 
                         'string':str(counter) + " D=" + str(p.D) + "  alpha=" + str(p.alpha) + "  " + colorcoded + "=" + str(var)})
             counter += 1
-    return dat, norm, colorcoded, colorcodedlabel
+    return dat, norm, colorcoded, colorcodedlabel, x, t, mt_length

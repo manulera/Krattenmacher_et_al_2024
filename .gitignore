@@ -17,3 +17,4 @@ tex_document/main.synctex.gz
 /__pycache__/
 
 /tex_document/main.pdf
+*.cpython-310.pyc

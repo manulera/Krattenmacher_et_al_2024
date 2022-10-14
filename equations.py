@@ -7,12 +7,12 @@ def get_kd(P, p):
     cprodP[1:] = np.cumprod(P[p.shifting[1:]]) 
     P_shifttoempty = p.beta * cprodP * (1 - P[p.shifting+1])
     P_shift = np.cumsum(P_shifttoempty[::-1])[::-1] # probability to shift, given P[0] (since we above set cprodP[0] = 1)
-    if p.P_lose + p.omega + P_shift[0] > 1:
-        raise Exception("P_lose + Omega + P_shift[0] > 1!")
+    if p.P_lose + P_shift[0] > 1:
+        raise Exception("P_lose + P_shift[0] > 1!")
     # kd = k0 * (1.-P[0]) + k0 * P[0] * (1.-omega) # without shifting
     k_free = p.depol_rate * (1.-P[0])
-    k_shift = p.depol_rate * P[0] * P_shift[0] * p.gamma
-    k_lose = p.depol_rate * P[0] * p.P_lose * p.delta
+    k_shift = p.depol_rate * P[0] * P_shift[0]
+    k_lose = p.depol_rate * P[0] * p.P_lose
     kd = k_free + k_shift + k_lose
     return P_shift, kd, k_shift, k_lose
 
@@ -39,8 +39,8 @@ def myODE(P, t,p):
 
     # dP1/dt as shown in the paper
     # diff_depo = kd * P[1] - k0 * P[0] * (1. - omega) # without shifting
-    from_next = kd * P[1] - k0 * P[0] * P_shift[1] * p.gamma # Ase1 at spot 1 might shift
-    lost = k0 * P[0] * p.P_lose * p.delta
+    from_next = kd * P[1] - k0 * P[0] * P_shift[1] # Ase1 at spot 1 might shift
+    lost = k0 * P[0] * p.P_lose
     dP[0] = kh * (P[1]-P[0]) - P[0] * koff + (1. - P[0]) * kon + from_next - lost
 
     # dPi/dt as shown in the paper
@@ -54,8 +54,8 @@ def myODE(P, t,p):
 
     s = p.shifting[1:] # we already took care of shifting for dP[0]
     dP[1:-1] = kh * (Pip1 + Pim1 - 2 * Pi) - Pi * koff + (1. - Pi) * kon + kd * (Pip1 - Pi)
-    dP[s] += k0 * P[0] * P_shift[s] * p.gamma
-    dP[s[:-1]] -= k0 * P[0] * P_shift[s[1:]] * p.gamma # Ase1 at next spot might shift
+    dP[s] += k0 * P[0] * P_shift[s]
+    dP[s[:-1]] -= k0 * P[0] * P_shift[s[1:]] # Ase1 at next spot might shift
 
     return dP
 
