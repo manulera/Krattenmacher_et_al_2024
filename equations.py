@@ -66,7 +66,9 @@ def solveDiscrete(p,t,N):
     """
     P0 = np.zeros(N, dtype=float)
     P0[:] = p.alpha
-    p.shifting = np.arange(len(p.beta))
+    if len(p.beta) == 1:
+        p.beta = np.append(p.beta, 0)
+    p.shifting = np.arange(max(len(p.beta),2))
 
     return odeint(myODE, P0, t, args=(p,))
 
