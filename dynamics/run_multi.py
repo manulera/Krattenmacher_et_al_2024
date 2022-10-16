@@ -20,16 +20,16 @@ def run_multiple():
 
     colorcoded = 'N_shifted'
     colorcodedlabel = 'N_shifted'
-    norm = matplotlib.colors.Normalize(vmin=0, vmax=65)
+    norm = matplotlib.colors.Normalize(vmin=0, vmax=130)
 
     p = Parameters()
     counter = 1
     for filename in os.listdir('./config/'):
-        for var in [0, 5, 20, 40, 60]:
+        for var in [0, 10, 40, 80, 120]:
             # p.read('./config/' + os.listdir('./config/')[5])
             p.read('./config/' + filename)
             N_shifted = var
-            p.beta = np.ones(var) * 0.2 if var > 0 else [0] #np.arange(0.2,0,-var)
+            p.beta = np.linspace(0.2, 0, num=var) if var > 0 else [0] #
             p.P_lose = 0.2
             # p.omega = 0 using P_lose=1-omega instead (is more intuitive for me)
             solution = solveDiscrete(p,t,mt_length)
