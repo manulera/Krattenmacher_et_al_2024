@@ -20,7 +20,7 @@ def get_v(P, p):
     _, kd, k_shift, k_lose = get_kd(P, p)
     return np.stack((kd, k_shift, k_lose)) * p.a
 
-def myODE(P, t,p):
+def myODE(P_all, t,p):
     """
     Discrete differential equation dP/dt, with the special cases of P1 and PN, as shown in the paper
     """
@@ -28,6 +28,13 @@ def myODE(P, t,p):
     kh = p.k_D/2
     kon = p.kon
     koff = p.koff
+
+    kons = kon #assuming kons to be the same
+    khs = p.k_Ds/2
+    koffs = koff * p.factor_isolated
+
+    o = p.overlap_start
+    P = P_all[o:]
 
     P_shift, kd, _, _ = get_kd(P, p)
 
@@ -41,7 +48,7 @@ def myODE(P, t,p):
     # diff_depo = kd * P[1] - k0 * P[0] * (1. - omega) # without shifting
     from_next = kd * P[1] - k0 * P[0] * P_shift[1] # Ase1 at spot 1 might shift
     lost = k0 * P[0] * p.P_lose
-    dP[0] = kh * (P[1]-P[0]) - P[0] * koff + (1. - P[0]) * kon + from_next - lost
+    dP[0] = kh * (P[1]-P[0]) - P[0] * koff + (1. - P[0]) * kon + from_next - lost #assuming no diffusive exchange with isolated
 
     # dPi/dt as shown in the paper
 
@@ -57,7 +64,26 @@ def myODE(P, t,p):
     dP[s] += k0 * P[0] * P_shift[s]
     dP[s[:-1]] -= k0 * P[0] * P_shift[s[1:]] # Ase1 at next spot might shift
 
-    return dP
+    # 
+    dP_all = np.zeros_like(P_all)
+    dP_all[o:] = dP
+
+    Ps = P_all[:o] # single/isolated MT region
+    dPs = np.zeros_like(Ps)
+
+    # Psi (excluding 1 and N-1)
+    Psi = Ps[1:-1]
+    # Psi+1
+    Psip1 = Ps[2:]
+    # Psi-1
+    Psim1 = Ps[:-2]
+
+    dPs[0] = 0
+    dPs[-1] = lost - Ps[-1] * koffs + (1. - Ps[-1]) * kons + khs * (Ps[-2] - Ps[-1]) - kd * Ps[-1]
+    dPs[1:-1] = khs * (Psip1 + Psim1 - 2 * Psi) - Psi * koffs + (1. - Psi) * kons + kd * (Psip1 - Psi)
+
+    dP_all[:o] = dPs
+    return dP_all
 
 def solveDiscrete(p,t,N):
     """
@@ -65,7 +91,8 @@ def solveDiscrete(p,t,N):
     equal to alpha (binding equilibrium)
     """
     P0 = np.zeros(N, dtype=float)
-    P0[:] = p.alpha
+    P0[p.overlap_start:] = p.alpha
+    P0[:p.overlap_start] = p.alphas
     if len(p.beta) == 1:
         p.beta = np.append(p.beta, 0)
     p.shifting = np.arange(max(len(p.beta),2))
