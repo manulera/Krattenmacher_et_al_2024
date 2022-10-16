@@ -19,13 +19,13 @@ def run_multiple():
     t = np.linspace(0,100,100)
 
     colorcoded = 'N_shifted'
-    colorcodedlabel = 'N_shifted'
+    colorcodedlabel = 'N'
     norm = matplotlib.colors.Normalize(vmin=0, vmax=130)
 
     p = Parameters()
     counter = 1
     for filename in os.listdir('./config/'):
-        for var in [0, 10, 40, 80, 120]:
+        for var in [0, 10, 40, 80, 120, 150]:
             # p.read('./config/' + os.listdir('./config/')[5])
             p.read('./config/' + filename)
             N_shifted = var
