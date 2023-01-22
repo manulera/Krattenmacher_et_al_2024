@@ -14,14 +14,14 @@ Some problems you may encounter when installing dependencies:
 
 * For this to work, you either need to have python >=3.9 installed in your computer, (see `pyproject.toml`) or have a python environment manager that can download the version specified in the file. I normally use `pyenv` ([link](https://github.com/pyenv/pyenv#installation)).
 
-* Scipy might give some trouble when installing, this link might be helpful: https://github.com/pyenv/pyenv/issues/2394. At least in mac, you need to have openblas installed (https://formulae.brew.sh/formula/openblas)
+* Scipy was a true pain to install, so I am using an old version `1.8.0`. Could not manage to install on my mac, problems with compiling using meson.
 
 ### Activate environment
 
 Then, to run any of the scripts you can activate a shell with the python environment you just created by calling:
 
 ```
-poetry shell
+source .venv/bin/activate
 ```
 
 To create the configuration files for the simulation, you will also need the python script `preconfig`, that is already included with minor changes. The repository can be found [here](https://github.com/nedelec/preconfig).

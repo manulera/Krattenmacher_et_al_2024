@@ -51,7 +51,7 @@ def myODE(P, t,p):
     dP[-1] = 0
 
     # dP1/dt as shown in the paper
-    dP[0] = kh * (P[1]-P[0]) - P[0] * koff + (1. - P[0]) * kon + kd * P[1] - k0 * P[0] * (1. - omega)
+    dP[0] = kh * (P[1]-P[0]) - P[0] * (koff + p.tip_off) + (1. - P[0]) * kon + kd * P[1] - k0 * P[0] * (1. - omega)
 
     # Pi (excluding 1 and N-1)
     Pi = P[1:-1]
@@ -89,7 +89,7 @@ def myODE_cooperativity(P, t,p):
     # sites are free
 
     # dP1/dt as shown in the paper
-    dP[0] = kh * (P[1]-P[0]) - P[0] * koff + (1. - P[0]) * kon + kd * P[1] - k0 * P[0] * (1. - omega)
+    dP[0] = kh * (P[1]-P[0]) - P[0] * (koff + p.tip_off) + (1. - P[0]) * kon + kd * P[1] - k0 * P[0] * (1. - omega)
 
     # Pi (excluding 1 and N-1)
     Pi = P[1:-1]

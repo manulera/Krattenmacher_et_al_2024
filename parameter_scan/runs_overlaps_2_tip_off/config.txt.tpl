@@ -1,25 +1,28 @@
 ## Preconfig -------------------
 # n = 0
 
-cooperativity = [[1,2,3]]
-cooperativity_mode = mixed
+cooperativity = 1
+cooperativity_mode = protofilament
+
 # Lattice size
 a = 0.008
-# Velocity of shrinkage of the MT in absence of Ase1
-v_s = [[np.arange(5,31)/100.]]
+# Velocity of shrinkage of the MT in absence of Ase1 (From table)
+v_s = 0.3
 # Probability of preventing depolymerization if Ase1 is there
-omega = 0.84
+omega = [[ [i/20. for i in range(10,21)] ]]
 
 # Ase1 ========================================================================
 # Diffusion rate of Ase1
-D = 0.09
+D = [[ [i/1000 for i in range(10,52,5)] ]]
 
 # Binding rate of Ase1 per lattice site
-# From the data in Fig. S2B
-kon = 0.001
+# See model parameter table
+kon = 0.018
 
-# Unbinding rate of Ase1 - We scan this parameter
+# Unbinding rate of Ase1 - # See model parameter table
 koff = 0.016
+
+tip_off = [[ [1, 5, 10, 20] ]]
 
 ## Initial conditions --------------------------------------------------
 

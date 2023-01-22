@@ -3,14 +3,14 @@ from matplotlib import pyplot as plt
 
 D = np.linspace(0, 0.1)
 v = 0.1
-ku = 0.01
+ku = 0.03
 alpha = 0.53/0.008
 
 plt.figure()
 
-for ku in [0.01, 0.1]:
+for ku in [0.03]:
     lamb = 2*D/(v + np.sqrt(v**2 + 4*D*ku))
-    max_density = 1/0.008
+    max_density = 0.76/0.008
     accum = lamb * (max_density - alpha)
     plt.plot(D, accum, label='ku = ' + str(ku))
 
