@@ -15,10 +15,10 @@ omega = [[ [i/100. for i in range(70,101)] ]]
 D = 0.09
 
 # Binding rate of Ase1 per lattice site
-# From the data in Fig. S2B
+# See model parameter table
 kon = 0.001
 
-# Unbinding rate of Ase1 - We scan this parameter
+# Unbinding rate of Ase1 - # See model parameter table
 koff = 0.016
 
 ## Initial conditions --------------------------------------------------

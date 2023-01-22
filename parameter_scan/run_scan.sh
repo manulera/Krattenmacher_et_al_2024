@@ -15,6 +15,6 @@ python ./preconfig.py $1/config.txt.tpl $1/scan
 # Move the files in to directories and rename them (see the result):
 python ./collect.py $1/scan/run%04i/config.txt $1/scan/config????.txt
 
-## Call the python executable in each of the files (nproc is if you want to run in parallel, change N to the number of processes)
+## Call the python executable in each of the files (jobs is if you want to run in parallel, change N to the number of processes)
 # Note that this is the relative path of solve_discrete_equation.py with respect to the scan/run????/ directory
-python ./scan.py 'python ../../../../solve_discrete_equation.py' jobs=1 $1/scan/run*
+python ./scan.py 'python ../../../../solve_discrete_equation.py' jobs=4 $1/scan/run*

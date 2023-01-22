@@ -2,24 +2,26 @@
 
 ## Setting up the python environment
 
-To reproduce the simulations, analysis and plots used in the paper, you need to have `pipenv` installed to manage the python dependencies. See the [documentation](https://pypi.org/project/pipenv/) to install it, but essentially you can do:
+To reproduce the simulations, analysis and plots used in the paper, you need to have `poetry` installed to manage the python dependencies. See the [documentation](https://python-poetry.org/docs/master/) to install it.
+
+Once you have `poetry` installed, you can install the project dependencies from the project directory running:
 
 ```
-pip install pipenv
+poetry install
 ```
 
-Once you have `pipenv` installed, you can install the project dependencies by going to the project folder (where `Pipfile.lock` file is) and running:
+Some problems you may encounter when installing dependencies:
 
-```
-pipenv install
-```
+* For this to work, you either need to have python >=3.9 installed in your computer, (see `pyproject.toml`) or have a python environment manager that can download the version specified in the file. I normally use `pyenv` ([link](https://github.com/pyenv/pyenv#installation)).
 
-For this to work, you either need to have python 3.9 installed in your computer, or have a python environment manager that can download the version specified in the `Pipfile` file. I normally use `pyenv` ([link](https://github.com/pyenv/pyenv#installation)).
+* Scipy might give some trouble when installing, this link might be helpful: https://github.com/pyenv/pyenv/issues/2394. At least in mac, you need to have openblas installed (https://formulae.brew.sh/formula/openblas)
+
+### Activate environment
 
 Then, to run any of the scripts you can activate a shell with the python environment you just created by calling:
 
 ```
-pipenv shell
+poetry shell
 ```
 
 To create the configuration files for the simulation, you will also need the python script `preconfig`, that is already included with minor changes. The repository can be found [here](https://github.com/nedelec/preconfig).
