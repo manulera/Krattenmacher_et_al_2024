@@ -18,7 +18,7 @@ data = pandas.concat([isolated_1nm, isolated_6nm, antiparallel, parallel])
 
 data.loc[:, 'event id'] = data.apply(lambda r: r['condition'] + '_' + str(r['event id']), axis=1)
 
-data.rename(columns={
+data.rename(inplace=True, columns={
     'event id': 'event_id',
     'MT id': 'mt_id',
     'time (s)': 'time',
@@ -28,8 +28,25 @@ data.rename(columns={
     'number of Ase1 molecules at tip fitted with exponential (1)': 'number_of_ase1_exp',
     'lengthscale of exponential decay (nm)': 'decay_lengthscale',
     'condition': 'condition',
-}
+})
 
-)
+# We add extra columns with integers to indicate the timepoint per event
+# and the nb of event within the condition.
 
-data.to_csv('experimental_data.csv', index=False)
+timepoint = 0
+event_nb = 0
+
+data['timepoint'] = 0
+data['event_nb'] = 0
+
+for condition in pandas.unique(data.condition):
+    logi = data.condition == condition
+    for i, event_id in enumerate(pandas.unique(data[logi].event_id)):
+        logi2 = data.event_id == event_id
+        data.loc[logi & logi2, 'event_nb'] = i
+
+for event_id in pandas.unique(data.event_id):
+    logi = data.event_id == event_id
+    data.loc[logi, 'timepoint'] = list(range(sum(logi)))
+
+data.to_csv('processed_data/experimental_data.csv', index=False)
