@@ -6,7 +6,7 @@ antiparallel = pandas.read_excel('Data Figure 3D 3E S3A S3B S4D.xlsx', sheet_nam
 parallel = pandas.read_excel('Data Figure 3D 3E S3A S3B S4D.xlsx', sheet_name='parallel')
 
 # Remove 1nM outliers
-isolated_1nm = isolated_1nm[~isolated_1nm['experiment id'].isin([20, 21])].copy()
+isolated_1nm = isolated_1nm[isolated_1nm['experiment id'].isin([20])].copy()
 isolated_1nm.drop(columns='experiment id', inplace=True)
 
 isolated_1nm['condition'] = '1nM'

@@ -7,8 +7,8 @@ sns.set_style('ticks')
 
 
 def loadSimulationResults(folder):
-    data = read_csv(folder+'/other_values.txt')
-    parameters = read_csv(folder+'/parameters_table.txt')
+    data = read_csv(folder + '/other_values.txt')
+    parameters = read_csv(folder + '/parameters_table.txt')
     data["omega"] = parameters["omega"]
 
     not_fit = data["accumulation_timescale"] == 1.0
@@ -28,7 +28,7 @@ experimental_summary['accumulation_end_fit'] = experimental_summary['accumulatio
 
 # model 1 and 2
 
-model = loadSimulationResults('runs_overlaps_5_higher_vmax')
+model = loadSimulationResults('runs_overlaps_half_2')
 
 
 # First plot
@@ -40,14 +40,10 @@ for tip_value in pd.unique(model.tip_off):
     for d_value in pd.unique(model.D):
         logi = (model.D == d_value) & logi1
         sns.lineplot(x='accumulation_end_fit', y='shrinking_speed_steady_state',
-                    data=model[logi], label=f'{d_value}')
-    plt.scatter(
-    20,
-    0.1,
-    label='Experiment'
-    )
-    plt.ylim([0,0.3])
-    plt.xlim([0,25])
+                     data=model[logi], label=f'{d_value}')
+    plt.scatter(20 / 2., 0.1, label='Experiment')
+    plt.ylim([0, 0.3])
+    plt.xlim([0, 25])
 
 plt.xlabel('Ase1 accumulation at steady state\n(per protofilament)')
 plt.ylabel('Shrinkage speed at \nsteady state (\u03BCm/s)')
@@ -58,11 +54,7 @@ plt.tight_layout()
 
 # Second plot
 plt.figure(figsize=[3, 3])
-plt.scatter(
-    10,
-    0.1,
-    label='Experiment'
-)
+plt.scatter(10, 0.1, label='Experiment')
 for d_value in pd.unique(model.D):
     logi = model.D == d_value
     sns.lineplot(x='accumulation_timescale', y='shrinking_speed_steady_state',

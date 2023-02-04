@@ -1,7 +1,6 @@
 # %%
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.cm import get_cmap
 from pandas import read_csv
 import seaborn as sns
 # %% Extra functions

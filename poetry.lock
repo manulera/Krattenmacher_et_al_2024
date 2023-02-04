@@ -25,6 +25,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "et-xmlfile"
+version = "1.1.0"
+description = "An implementation of lxml.xmlfile for the standard library"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "fonttools"
 version = "4.38.0"
 description = "Tools to manipulate font files"
@@ -89,6 +97,17 @@ description = "Fundamental package for array computing in Python"
 category = "main"
 optional = false
 python-versions = ">=3.8"
+
+[[package]]
+name = "openpyxl"
+version = "3.1.0"
+description = "A Python library to read/write Excel 2010 xlsx/xlsm files"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+et-xmlfile = "*"
 
 [[package]]
 name = "packaging"
@@ -232,16 +251,18 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<3.11"
-content-hash = "8305754e07631dc6a254edd4ac4cc6e0ff018e71f553f15a0e3ac75b5acfa0a4"
+content-hash = "004f2796b071325348900d80b545d95deaca92fc960b9e48582493507f1f55d4"
 
 [metadata.files]
 contourpy = []
 cycler = []
+et-xmlfile = []
 fonttools = []
 joblib = []
 kiwisolver = []
 matplotlib = []
 numpy = []
+openpyxl = []
 packaging = []
 pandas = []
 pillow = []

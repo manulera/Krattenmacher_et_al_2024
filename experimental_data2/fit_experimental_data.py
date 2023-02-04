@@ -16,23 +16,26 @@ def get_fits(d, condition):
     sugg = [70, 20] if 'nM' in condition else [20, 30]
 
     logi = np.logical_not(np.isnan(d.number_of_ase1_exp))
-    if sum(logi) < 3:
-        return None
-    try:
-        params_accum, _ = curve_fit(accumulationFit, d.time[logi], d.number_of_ase1_exp[logi], sugg)
-    except RuntimeError:
-        return None
+    if sum(logi) > 3:
+        try:
+            params_accum, _ = curve_fit(accumulationFit, d.time[logi], d.number_of_ase1_exp[logi], sugg)
+        except RuntimeError:
+            params_accum = [np.nan, np.nan]
+    else:
+        params_accum = [np.nan, np.nan]
 
     # Fit the timescale to the velocity data (we exclude the first timepoints)
     sugg = [130, 110, 5] if 'nM' in condition else [200, 100, 5]
     logi = np.logical_not(np.isnan(d.velocity))
     logi = np.logical_and(logi, np.greater(d.timepoint, 2))
-    if sum(logi) < 3:
-        return None
-    try:
-        params_velocity, _ = curve_fit(velocityFit, d.time[logi], d.velocity[logi], sugg)
-    except RuntimeError:
-        return None
+    if sum(logi) > 3:
+        try:
+            params_velocity, _ = curve_fit(velocityFit, d.time[logi], d.velocity[logi], sugg)
+        except RuntimeError:
+            params_velocity = [np.nan, np.nan, np.nan]
+    else:
+        params_velocity = [np.nan, np.nan, np.nan]
+
     # Tau should be approximately 200 nm
     row = {
         'condition': condition,
@@ -55,10 +58,11 @@ for condition in pandas.unique(data.condition):
     data_condition = data[data.condition == condition]
 
     output_data_list.append(get_fits(data_condition, condition))
+
     for event_id in pandas.unique(data_condition.event_id):
         logi = data_condition.event_id == event_id
         # Do not do individual fits for very short traces
-        if sum(logi) < 3:
+        if sum(logi) < 10:
             continue
         individual_fits_list.append(get_fits(data_condition[logi], condition))
 

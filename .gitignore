@@ -15,3 +15,5 @@ tex_document/main.synctex.gz
 /parameter_scan/*/scan/
 /parameter_scan_overlap/*/scan/
 /parameter_scan_overlap/*/plots/
+experimental_data2/plots
+experimental_data2/processed_data
