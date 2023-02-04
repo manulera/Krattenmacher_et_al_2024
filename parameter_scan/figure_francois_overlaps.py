@@ -28,7 +28,7 @@ experimental_summary['accumulation_end_fit'] = experimental_summary['accumulatio
 
 # model 1 and 2
 
-model = loadSimulationResults('runs_overlaps_2')
+model = loadSimulationResults('runs_overlaps_5_higher_vmax')
 
 
 # First plot
@@ -47,7 +47,7 @@ for tip_value in pd.unique(model.tip_off):
     label='Experiment'
     )
     plt.ylim([0,0.3])
-    plt.xlim([0,20])
+    plt.xlim([0,25])
 
 plt.xlabel('Ase1 accumulation at steady state\n(per protofilament)')
 plt.ylabel('Shrinkage speed at \nsteady state (\u03BCm/s)')
@@ -73,7 +73,7 @@ plt.ylabel('Shrinkage speed at \nsteady state (\u03BCm/s)')
 
 plt.legend()
 plt.ylim(ymin=0)
-plt.xlim([0, 20])
+plt.xlim([0, 25])
 plt.tight_layout()
 
 
