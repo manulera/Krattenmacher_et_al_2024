@@ -26,7 +26,7 @@ things2plot = [
 ]
 
 
-for condition in ['6nM']:
+for condition in pandas.unique(data.condition):
     data_condition = data[data.condition == condition]
     fits_condition = fits[fits.condition == condition].iloc[0].to_dict()
     # For plotting the model
@@ -63,20 +63,20 @@ for condition in ['6nM']:
         plt.tight_layout()
         plt.savefig(f'plots/{condition}_time_vs_{magnitude}.svg')
 
-        plt.figure(figsize=[4, 4])
-        plt.title(condition)
-        for event in np.unique(data_condition['event_id']):
-            logi = data_condition['event_id'] == event
-            this_df = data_condition[logi]
-            color = cmap(list(this_df.event_nb)[0] / np.max(data_condition.event_nb) * 0.8)
-            plt.scatter(this_df.number_of_ase1_exp, this_df['velocity'], c=color)
+    plt.figure(figsize=[4, 4])
+    plt.title(condition)
+    for event in np.unique(data_condition['event_id']):
+        logi = data_condition['event_id'] == event
+        this_df = data_condition[logi]
+        color = cmap(list(this_df.event_nb)[0] / np.max(data_condition.event_nb) * 0.8)
+        plt.scatter(this_df.number_of_ase1_exp, this_df['velocity'], c=color)
 
-        plt.xlabel('ase1_accumulation')
-        plt.ylabel('velocity')
-        plt.xlim(xmin=0)
-        plt.ylim(ymin=0)
-        plt.tight_layout()
-        plt.savefig(f'plots/{condition}_ase1_accumulation_vs_velocity.svg')
+    plt.xlabel('ase1_accumulation')
+    plt.ylabel('velocity')
+    plt.xlim(xmin=0)
+    plt.ylim(ymin=0)
+    plt.tight_layout()
+    plt.savefig(f'plots/{condition}_ase1_accumulation_vs_velocity.svg')
 
 
 plt.show()

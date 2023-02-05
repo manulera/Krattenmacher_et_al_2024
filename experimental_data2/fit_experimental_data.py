@@ -30,7 +30,7 @@ def get_fits(d, condition):
     logi = np.logical_and(logi, np.greater(d.timepoint, 2))
     if sum(logi) > 3:
         try:
-            params_velocity, _ = curve_fit(velocityFit, d.time[logi], d.velocity[logi], sugg)
+            params_velocity, _ = curve_fit(velocityFit, d.time[logi] - np.min(d.time[logi]), d.velocity[logi], sugg)
         except RuntimeError:
             params_velocity = [np.nan, np.nan, np.nan]
     else:
@@ -50,25 +50,27 @@ def get_fits(d, condition):
     return row
 
 
-data = pandas.read_csv('processed_data/experimental_data.csv')
-output_data_list = list()
-individual_fits_list = list()
+if __name__ == '__main__':
 
-for condition in pandas.unique(data.condition):
-    data_condition = data[data.condition == condition]
+    data = pandas.read_csv('processed_data/experimental_data.csv')
+    output_data_list = list()
+    individual_fits_list = list()
 
-    output_data_list.append(get_fits(data_condition, condition))
+    for condition in pandas.unique(data.condition):
+        data_condition = data[data.condition == condition]
 
-    for event_id in pandas.unique(data_condition.event_id):
-        logi = data_condition.event_id == event_id
-        # Do not do individual fits for very short traces
-        if sum(logi) < 10:
-            continue
-        individual_fits_list.append(get_fits(data_condition[logi], condition))
+        output_data_list.append(get_fits(data_condition, condition))
 
-out_data = pandas.DataFrame(output_data_list)
-out_data.to_csv('processed_data/fits.csv', float_format='%.3E', index=False)
+        for event_id in pandas.unique(data_condition.event_id):
+            logi = data_condition.event_id == event_id
+            # Do not do individual fits for very short traces
+            if sum(logi) < 10:
+                continue
+            individual_fits_list.append(get_fits(data_condition[logi], condition))
 
-individual_fits_list = [f for f in individual_fits_list if f is not None]
-individual_fits = pandas.DataFrame(individual_fits_list)
-individual_fits.to_csv('processed_data/individual_fits.csv', float_format='%.3E', index=False)
+    out_data = pandas.DataFrame(output_data_list)
+    out_data.to_csv('processed_data/fits.csv', float_format='%.3E', index=False)
+
+    individual_fits_list = [f for f in individual_fits_list if f is not None]
+    individual_fits = pandas.DataFrame(individual_fits_list)
+    individual_fits.to_csv('processed_data/individual_fits.csv', float_format='%.3E', index=False)

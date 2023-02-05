@@ -36,9 +36,9 @@ def aveline(x_in, y_in, bins):
 cmap = sns.color_palette("rocket", as_cmap=True)
 
 folders = [
-    'parameter_scan/runs_coop1/scan/run0020',
-    'parameter_scan/runs_coop2/scan/run0113',
-    'parameter_scan/runs_special_coop2/scan/run0076'
+    'parameter_scan2/runs_coop1/scan/run0020',
+    'parameter_scan2/runs_coop2/scan/run0113',
+    'parameter_scan2/runs_special_coop2/scan/run0076'
 ]
 
 _, accum_figure = plt.subplots(figsize=[3.75, 3])
@@ -47,7 +47,7 @@ _, velocity_figure = plt.subplots(figsize=[3.75, 3])
 data = pandas.read_csv('experimental_data2/processed_data/experimental_data.csv')
 
 data_condition = data[data.condition == '6nM']
-data_condition.velocity = data_condition.velocity / 1000.
+data_condition.loc[:, 'velocity'] = data_condition.loc[:, 'velocity'] / 1000.
 
 accum_figure.scatter(data_condition.time, data_condition.number_of_ase1_exp / 13., 10, c=sns.color_palette()[0], alpha=0.3)
 velocity_figure.scatter(data_condition.time, data_condition.velocity, 10, color=sns.color_palette()[0], alpha=0.3)
@@ -91,4 +91,4 @@ plt.legend(loc='upper right')
 # reorder_legend([0, 4, 1, 2, 3])
 plt.savefig('figures_revision/speed_dynamics.svg')
 
-# plt.show()
+plt.show()
