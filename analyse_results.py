@@ -24,7 +24,7 @@ def timeScaleFitFunction(t, P, T):
 
 
 def lengthScaleFitFunction(l, P, L):
-    return P * np.exp(-l/L)
+    return P * np.exp(-l / L)
 
 
 def velocityFit(t, P0, Pend, T):
@@ -49,7 +49,7 @@ def main(folder):
 
     # We also calculate its decay
     fit, _ = curve_fit(velocityFit, t, speed, [
-                       speed[0]-speed[-1], speed[-1], 1])
+                       speed[0] - speed[-1], speed[-1], 1])
     _, _, velocity_decay_timescale = tuple(fit)
 
     # We calculate and export the accumulated ase1 (over the equilibrium value, alpha)

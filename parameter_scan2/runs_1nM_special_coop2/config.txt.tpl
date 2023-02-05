@@ -16,7 +16,7 @@ D = 0.09
 
 # Binding rate of Ase1 per lattice site
 # See model parameter table
-kon = 0.00003
+kon = 0.00004
 
 # Unbinding rate of Ase1 - # See model parameter table
 koff = 0.016

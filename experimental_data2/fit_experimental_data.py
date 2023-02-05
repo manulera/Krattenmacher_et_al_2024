@@ -36,6 +36,11 @@ def get_fits(d, condition):
     else:
         params_velocity = [np.nan, np.nan, np.nan]
 
+    # Aggregate per event
+    velocity_data: pandas.DataFrame = d[(d.time > 20) & ~pandas.isna(d.velocity)].copy()
+    velocity_data = velocity_data.groupby('event_id', as_index=False).agg({'velocity': np.nanmean})
+    velocity_data = velocity_data.velocity
+
     # Tau should be approximately 200 nm
     row = {
         'condition': condition,
@@ -43,8 +48,8 @@ def get_fits(d, condition):
         'accumulation_timescale': params_accum[1],
         'velocity_decay_timescale': params_velocity[2],
         'v_s_fit': params_velocity[0] + params_velocity[1],
-        'shrinking_speed_steady_state': params_velocity[1],
-
+        'shrinking_speed_steady_state': np.nanmean(velocity_data),
+        'shrinking_speed_steady_state_ci': 1.96 * np.nanstd(velocity_data) / np.sqrt(np.size(velocity_data))
     }
 
     return row

@@ -46,7 +46,7 @@ _, velocity_figure = plt.subplots(figsize=[3.75, 3])
 
 data = pandas.read_csv('experimental_data2/processed_data/experimental_data.csv')
 
-data_condition = data[data.condition == '6nM']
+data_condition = data[data.condition == 'antiparallel']
 data_condition.loc[:, 'velocity'] = data_condition.loc[:, 'velocity'] / 1000.
 
 accum_figure.scatter(data_condition.time, data_condition.number_of_ase1_exp / 13., 10, c=sns.color_palette()[0], alpha=0.3)
