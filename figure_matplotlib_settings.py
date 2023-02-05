@@ -24,3 +24,7 @@ def plot_confidence_interval(plt, x_value, y_value, x_ci, y_ci, *args):
     print(y_ci)
 
     return plt.errorbar(x_value, y_value, xerr=x_ci_plot, yerr=y_ci_plot, capsize=3,)
+
+def reorder_legend(plt, order):
+    handles, labels = plt.gca().get_legend_handles_labels()
+    plt.legend([handles[idx] for idx in order], [labels[idx] for idx in order], loc='upper right')

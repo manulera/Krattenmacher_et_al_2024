@@ -18,3 +18,4 @@ tex_document/main.synctex.gz
 /parameter_scan_overlap/*/plots/
 experimental_data2/plots
 experimental_data2/processed_data
+/figures_revision/*.svg

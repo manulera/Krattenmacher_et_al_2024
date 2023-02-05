@@ -1,8 +1,8 @@
 ## Preconfig -------------------
 # n = 0
 
-cooperativity = [[ [1, 3] ]]
-cooperativity_mode = protofilament
+cooperativity = 3
+cooperativity_mode = mixed_antiparallel
 
 # Lattice size
 a = 0.008

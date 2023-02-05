@@ -1,8 +1,8 @@
 ## Preconfig -------------------
 # n = 0
 
-cooperativity = [[ [1, 3] ]]
-cooperativity_mode = protofilament
+cooperativity = 3
+cooperativity_mode = mixed_antiparallel
 
 # Lattice size
 a = 0.008
@@ -17,7 +17,7 @@ D = [[ [0.01, 0.02, 0.04] ]]
 
 # Binding rate of Ase1 per lattice site
 # See model parameter table
-kon = 0.0059
+kon = 0.019
 
 # Unbinding rate of Ase1 - # See model parameter table
 koff = 0.016
