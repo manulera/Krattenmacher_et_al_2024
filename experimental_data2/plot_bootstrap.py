@@ -3,7 +3,8 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 
-data = pandas.read_csv('processed_data/bootstrap_fits.csv')
+bootstrap_data = pandas.read_csv('processed_data/bootstrap_fits.csv')
+whole_experiment_fits = pandas.read_csv('processed_data/fits.csv')
 
 things2plot = [
     'accumulation_end_fit',
@@ -15,11 +16,11 @@ things2plot = [
 
 output_data_list = list()
 
-for condition in pandas.unique(data.condition):
-    data_condition = data[data.condition == condition]
+for condition in pandas.unique(bootstrap_data.condition):
+    bootstrap_data_condition = bootstrap_data[bootstrap_data.condition == condition]
     for column in things2plot:
         plt.figure()
-        x = data_condition[column]
+        x = bootstrap_data_condition[column]
         x = x[x > 0].copy()
         bins = np.linspace(np.percentile(x, 2), np.percentile(x, 98))
         plt.hist(x, bins)
@@ -32,6 +33,7 @@ for condition in pandas.unique(data.condition):
         this_dict = {
             'condition': condition,
             'magnitude': column,
+            'whole_experiment_fit': whole_experiment_fits.loc[whole_experiment_fits.condition == condition, column].iloc[0],
             'lower': np.percentile(x, 2.5),
             'upper': np.percentile(x, 97.5)
         }

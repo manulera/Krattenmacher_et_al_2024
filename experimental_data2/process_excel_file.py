@@ -30,6 +30,11 @@ data.rename(inplace=True, columns={
     'condition': 'condition',
 })
 
+# Scale the Ase1 signal with new calibration
+data['equilibrium_density'] = data['equilibrium_density'] * 2.74
+data['number_of_ase1_gauss'] = data['number_of_ase1_gauss'] * 2.74
+data['number_of_ase1_exp'] = data['number_of_ase1_exp'] * 2.74
+
 # We add extra columns with integers to indicate the timepoint per event
 # and the nb of event within the condition.
 
