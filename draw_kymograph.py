@@ -3,6 +3,9 @@ import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
 from simulation import Parameters
+from figure_matplotlib_settings import matplotlib_settings
+
+matplotlib_settings(plt)
 
 cmap = sns.color_palette("rocket", as_cmap=True)
 
@@ -12,18 +15,6 @@ folders = [
 ]
 names = ['Model 1', 'Model 2']
 linestyles = ['-','--',':']
-plt.figure(figsize=[3,3])
-for folder,name,ls in zip(folders,names,linestyles):
-    speed = np.genfromtxt(f'{folder}/speed.txt',delimiter=',')    
-    solution = np.genfromtxt(f'{folder}/solution.txt',delimiter=',')
-    plt.plot(speed,ls=ls,label=name,c='k')
-plt.xlim(0,100)
-plt.ylim(ymin=0)
-plt.ylabel('Shrinkage speed at \nsteady state (\u03BCm/s)')
-plt.xlabel('Time (s)\n ')
-plt.legend(fontsize=8)
-plt.tight_layout()
-plt.savefig('parameter_scan/plots_paper/dynamics.svg')
 
 for folder, title in zip(folders,['model1','model2','model3']):
     # The maximum timepoint and max_length (in lattice sites)
@@ -50,7 +41,7 @@ for folder, title in zip(folders,['model1','model2','model3']):
     plt.ylabel('Ase1 density (molecules/site)')
     plt.legend()
     plt.tight_layout()
-    plt.savefig(f'parameter_scan/plots_paper/{title}_density_profile.svg')
+    plt.savefig(f'figures_revision/{title}_density_profile.svg')
     
     p = Parameters()
     p.read(f'{folder}/config.txt')

@@ -8,9 +8,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="154.25638mm"
-   height="154.74345mm"
-   viewBox="0 0 154.25638 154.74345"
+   width="166.4272mm"
+   height="232.00179mm"
+   viewBox="0 0 166.4272 232.00178"
    version="1.1"
    id="svg699262"
    inkscape:version="1.0.2 (e86c8708, 2021-01-15)"
@@ -48,16 +48,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="151.01623"
-     inkscape:cy="233.66933"
+     inkscape:cx="157.01623"
+     inkscape:cy="444.85713"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1252"
-     inkscape:window-height="1174"
-     inkscape:window-x="1744"
-     inkscape:window-y="23"
+     inkscape:window-width="1793"
+     inkscape:window-height="1183"
+     inkscape:window-x="1784"
+     inkscape:window-y="87"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata699259">
@@ -75,12 +75,32 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(7.8291305,-32.522513)">
+     transform="translate(9.4166291,44.735822)">
+    <image
+       sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/model1_density_profile.svg"
+       xlink:href="figures_revision/model1_density_profile.svg"
+       y="-41.334034"
+       x="-3.856081"
+       id="image853950"
+       height="76.199997"
+       width="76.199997"
+       inkscape:svg-dpi="96"
+       preserveAspectRatio="none" />
+    <image
+       sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/model2_density_profile.svg"
+       xlink:href="figures_revision/model2_density_profile.svg"
+       y="-41.334034"
+       x="80.810577"
+       id="image856418"
+       height="76.199997"
+       width="76.199997"
+       inkscape:svg-dpi="96"
+       preserveAspectRatio="none" />
     <image
        sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/1nM_pf13_speed_vs_accumulation.svg"
        xlink:href="figures_revision/1nM_pf13_speed_vs_accumulation.svg"
        y="34.865963"
-       x="-5.9727502"
+       x="-3.8560834"
        id="image838115"
        height="76.199997"
        width="76.199997"
@@ -89,19 +109,19 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="-7.6177282"
-       y="40.21711"
+       x="-9.2052269"
+       y="-37.041225"
        id="text372601"><tspan
          sodipodi:role="line"
          id="tspan372599"
-         x="-7.6177282"
-         y="40.21711"
+         x="-9.2052269"
+         y="-37.041225"
          style="stroke-width:0.264583">A</tspan></text>
     <image
        sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/1nM_pf13_speed_vs_timescale.svg"
        xlink:href="figures_revision/1nM_pf13_speed_vs_timescale.svg"
        y="34.865963"
-       x="70.227249"
+       x="80.810577"
        id="image843442"
        height="76.199997"
        width="76.199997"
@@ -110,19 +130,19 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="74.473145"
-       y="40.21711"
+       x="72.885643"
+       y="-37.041225"
        id="text372601-4"><tspan
          sodipodi:role="line"
          id="tspan372599-9"
-         x="74.473145"
-         y="40.21711"
+         x="72.885643"
+         y="-37.041225"
          style="stroke-width:0.264583">B</tspan></text>
     <image
        sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/antiparallel_pf3_speed_vs_accumulation.svg"
        xlink:href="figures_revision/antiparallel_pf3_speed_vs_accumulation.svg"
        y="111.06596"
-       x="-5.9727502"
+       x="-3.8560834"
        id="image845657"
        height="76.199997"
        width="76.199997"
@@ -131,19 +151,19 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="-8.4234076"
-       y="119.67257"
+       x="-10.010906"
+       y="42.414253"
        id="text372629"><tspan
          sodipodi:role="line"
          id="tspan372627"
-         x="-8.4234076"
-         y="119.67257"
+         x="-10.010906"
+         y="42.414253"
          style="stroke-width:0.264583">C</tspan></text>
     <image
        sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/antiparallel_pf3_speed_vs_timescale.svg"
        xlink:href="figures_revision/antiparallel_pf3_speed_vs_timescale.svg"
        y="111.06596"
-       x="70.227249"
+       x="80.810577"
        id="image848019"
        height="76.199997"
        width="76.199997"
@@ -152,13 +172,35 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="73.805038"
-       y="119.81209"
+       x="72.217537"
+       y="42.553764"
        id="text372633"><tspan
          sodipodi:role="line"
          id="tspan372631"
-         x="73.805038"
-         y="119.81209"
+         x="72.217537"
+         y="42.553764"
          style="stroke-width:0.264583">D</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-10.450154"
+       y="119.95457"
+       id="text372633-5"><tspan
+         sodipodi:role="line"
+         id="tspan372631-0"
+         x="-10.450154"
+         y="119.95457"
+         style="stroke-width:0.264583">E</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="74.506004"
+       y="119.95457"
+       id="text858312"><tspan
+         sodipodi:role="line"
+         id="tspan858310"
+         x="74.506004"
+         y="119.95457"
+         style="stroke-width:0.264583">F</tspan></text>
   </g>
 </svg>
