@@ -18,7 +18,7 @@ model_names = ['Model 1', 'Model 2']
 for condition, protofilaments in args:
 
     # label for plots
-    label = condition if condition == 'antiparallel' else f'Single {condition}'
+    label = 'Antiparallel' if condition == 'antiparallel' else f'Single {condition}'
 
     # Experimental data
     fits2experiments = pandas.read_csv('experimental_data/processed_data/fits.csv')
