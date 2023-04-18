@@ -16,20 +16,20 @@ for condition, protofilaments in args:
     if condition == '6nM':
 
         folders = [
-            'parameter_scan3/runs_coop1_6nM/scan/run0020',
-            'parameter_scan3/runs_coop2_6nM/scan/run0113',
-            'parameter_scan3/runs_special_coop2_6nM/scan/run0076'
+            'parameter_scan3/runs_6nM/scan/run0019',
+            'parameter_scan3/runs_6nM/scan/run0145',
         ]
-        names = ['Model 1', 'Model 2', 'Model 3']
-        linestyles = [':', '--', '-']
+        names = ['Model 1', 'Model 2']
+        linestyles = [':', '-']
 
     elif condition == '1nM':
-        continue
+
         folders = [
-            'parameter_scan2/runs_1nM_special_coop2/scan/run0076',
+            'parameter_scan3/runs_1nM/scan/run0019',
+            'parameter_scan3/runs_1nM/scan/run0145',
         ]
-        names = ['Model 3']
-        linestyles = ['-']
+        names = ['Model 1', 'Model 2']
+        linestyles = [':', '-']
 
     else:
         continue
@@ -49,10 +49,10 @@ for condition, protofilaments in args:
     xx = np.insert(xx, 0, 0)
     yy = np.insert(yy, 0, 0)
     err = np.insert(err, 0, 0)
-    accum_figure.errorbar(xx, yy, err, lw=2, color=sns.color_palette()[0], ecolor='black', capsize=5, label='Ase1 6nM')
+    accum_figure.errorbar(xx, yy, err, lw=2, color=sns.color_palette()[0], ecolor='black', capsize=5, label=f'Single {condition}')
 
     xx, yy, err = aveline(data_condition.time[data_condition.timepoint > 2], data_condition.velocity[data_condition.timepoint > 2], np.linspace(0, 50, 6))
-    velocity_figure.errorbar(xx, yy, err, lw=2, c=sns.color_palette()[0], capsize=5, ecolor='black', label='Ase1 6nM')
+    velocity_figure.errorbar(xx, yy, err, lw=2, c=sns.color_palette()[0], capsize=5, ecolor='black', label=f'Single {condition}')
 
     for folder, name, ls in zip(folders, names, linestyles):
         speed = np.genfromtxt(f'{folder}/speed.txt', delimiter=',')
@@ -62,7 +62,7 @@ for condition, protofilaments in args:
 
     plt.sca(accum_figure)
 
-    plt.xlabel('time (s)')
+    plt.xlabel('Time (s)')
     plt.ylabel('Ase1 accumulation')
     plt.xlim([0, 60])
     plt.ylim(ymin=0)
@@ -71,8 +71,8 @@ for condition, protofilaments in args:
     plt.savefig(f'figures_revision/{condition}_pf{protofilaments}_accumulation_dynamics.svg')
 
     plt.sca(velocity_figure)
-    plt.xlabel('time (s)')
-    plt.ylabel('depol. speed (μm/s)')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Depol. speed (μm/s)')
     plt.xlim([0, 60])
     plt.ylim([0, .4])
     plt.tight_layout()

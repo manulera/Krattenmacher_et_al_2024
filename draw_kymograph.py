@@ -7,11 +7,10 @@ from simulation import Parameters
 cmap = sns.color_palette("rocket", as_cmap=True)
 
 folders = [
-    'parameter_scan/runs_coop1/scan/run0020',
-    'parameter_scan/runs_coop2/scan/run0113',
-    'parameter_scan/runs_special_coop2/scan/run0076'
+    'parameter_scan3/runs_6nM/scan/run0019',
+    'parameter_scan3/runs_6nM/scan/run0145',
 ]
-names = ['Model 1, $\Omega$=1', 'Model 2, $\Omega$=0.9,N=4', 'Model 3, $\Omega$=0.84,N=3']
+names = ['Model 1', 'Model 2']
 linestyles = ['-','--',':']
 plt.figure(figsize=[3,3])
 for folder,name,ls in zip(folders,names,linestyles):
@@ -31,7 +30,7 @@ for folder, title in zip(folders,['model1','model2','model3']):
     max_t = 50
 
     # We have to scale the kymograph, otherwise the svg is huge
-    scale_image = 5
+    scale_image = 10
 
     solution = np.genfromtxt(f'{folder}/solution.txt',delimiter=',')
     solution = solution[0:max_t,:]
@@ -75,18 +74,21 @@ for folder, title in zip(folders,['model1','model2','model3']):
 
     kymograph = kymograph[:,::scale_image]
 
-    plt.figure(figsize=[4,2])
-    ax = sns.heatmap(kymograph, linewidth=0, cbar_kws = dict(use_gridspec=False,location="left"),vmin=0,vmax=0.5)
-    ax.collections[0].colorbar.set_label("Ase1 density\n(molecules/site)")
+    plt.figure(figsize=[4,2.5])
+    ax = sns.heatmap(kymograph, linewidth=0, cbar_kws = dict(use_gridspec=False,location="top"),vmin=0,vmax=0.5)
+    ax.collections[0].colorbar.set_label("Ase1 per binding site", fontsize=12)
+    ax.collections[0].colorbar.set_ticks([0,0.25,0.5])
+    
     plt.yticks([])
     plt.xticks([])
     trans = ax.get_xaxis_transform()
-    ax.plot([0,2/0.008/scale_image],[1.01,1.01], color="k", transform=trans, clip_on=False)
-    ax.annotate('2 \u03BCm', xy=(1/0.008/scale_image, 1.02), xycoords=trans, ha="center", va="bottom")
+    start_line = 0.1
+    ax.plot([1/0.008/scale_image, 3/0.008/scale_image],[30,30], color="w", clip_on=False)
+    ax.annotate('2 \u03BCm', xy=(2/0.008/scale_image, 29), ha="center", va="bottom", c='w', fontsize=12)
 
-    trans = ax.get_yaxis_transform()
-    ax.plot([-.01,-.01],[0,15], color="k", transform=trans, clip_on=False)
-    ax.annotate('15 s', xy=(-.02, 7.5), xycoords=trans, ha="right", va="center", rotation=90)
+    ax.plot([1/0.008/scale_image,1/0.008/scale_image],[30,45], color="w", clip_on=False)
+    ax.annotate('15 s', xy=(1/0.008/scale_image, 37.5), ha="right", va="center", rotation=90, c='w', fontsize=12)
 
-    plt.savefig(f'parameter_scan/plots_paper/{title}_simulated_kymograph.svg')
+    plt.savefig(f'figures_revision/{title}_simulated_kymograph.svg')
+
 plt.show()
