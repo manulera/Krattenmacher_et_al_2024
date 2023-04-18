@@ -14,16 +14,17 @@ for condition, protofilaments in args:
     cmap = sns.color_palette("rocket", as_cmap=True)
 
     if condition == '6nM':
-        continue
+
         folders = [
-            'parameter_scan2/runs_coop1/scan/run0020',
-            'parameter_scan2/runs_coop2/scan/run0113',
-            'parameter_scan2/runs_special_coop2/scan/run0076'
+            'parameter_scan3/runs_coop1_6nM/scan/run0020',
+            'parameter_scan3/runs_coop2_6nM/scan/run0113',
+            'parameter_scan3/runs_special_coop2_6nM/scan/run0076'
         ]
         names = ['Model 1', 'Model 2', 'Model 3']
         linestyles = [':', '--', '-']
 
     elif condition == '1nM':
+        continue
         folders = [
             'parameter_scan2/runs_1nM_special_coop2/scan/run0076',
         ]
@@ -36,7 +37,7 @@ for condition, protofilaments in args:
     _, accum_figure = plt.subplots(figsize=[3.75, 3])
     _, velocity_figure = plt.subplots(figsize=[3.75, 3])
 
-    data = pandas.read_csv('experimental_data2/processed_data/experimental_data.csv')
+    data = pandas.read_csv('experimental_data/processed_data/experimental_data.csv')
 
     data_condition = data[data.condition == condition]
     data_condition.loc[:, 'velocity'] = data_condition.loc[:, 'velocity'] / 1000.

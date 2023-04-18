@@ -37,5 +37,5 @@ The following fitted parameters are used to fit with the model:
 * accumulation_end_fit: `P` in a fit to `P * (1 - np.exp(-t / T))` of `number_of_ase1_exp` vs. time.
 * accumulation_timescale: `T` in a fit to `P * (1 - np.exp(-t / T))` of `number_of_ase1_exp` vs. time.
 * shrinking_speed_steady_state: mean of the shrinking speed after twenty seconds of shrinkage.
-* shrinking_speed_steady_state_ci: 95% CI of the shrinking speed after twenty seconds of shrinkage.
+* The confidence intervals come from bootstrapping the data and are summarised in `processed_data/bootstrap_fits.csv`
 

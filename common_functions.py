@@ -9,6 +9,7 @@ def load_simulation_results(folder):
     not_fit = data["accumulation_timescale"] == 1.0
     data["accumulation_timescale"][not_fit] = 0
     data['cooperativity'] = parameters['cooperativity'].astype(int)
+    data['cooperativity_mode'] = parameters['cooperativity_mode']
     data['D'] = parameters['D'].astype(float)
     return data
 

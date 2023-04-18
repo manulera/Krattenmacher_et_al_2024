@@ -103,3 +103,9 @@ In the cases where events do not happen, the function returns 0, and not the tim
 This function is called recursively until the simulation time is bigger than `t_max`. Also, every `t_snap` seconds, a snapshot of the simulation is added to a list, that is then the output of `Simulation.run`.
 
 
+## Experimental parameters for the simulations
+
+* k_off was experimentally determined: 0.016 s-1.
+* k_on is calculated with experimental_data/get_kon.py, using the equilibrium density of Ase1 in the different conditions, assuming k_off does not change.
+* v_s was determined experimentally: 0.44 um/s.
+* D = 0.09 um2/s from the reference indicated in the paper.

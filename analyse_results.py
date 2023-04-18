@@ -74,7 +74,7 @@ def main(folder):
 
     with open(os.path.join(folder, "parameters_table.txt"), "w") as out:
         out.write(
-            f'omega,cooperativity,kon,v_s,D,tip_off\n{p.omega},{p.cooperativity},{p.kon},{p.v_s},{p.D},{p.tip_off}\n')
+            f'omega,cooperativity,kon,v_s,D,tip_off,cooperativity_mode\n{p.omega},{p.cooperativity},{p.kon},{p.v_s},{p.D},{p.tip_off},{p.cooperativity_mode}\n')
 
 
 # ------------------------------------------------------------------------
