@@ -1,130 +1,82 @@
-# %%
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.cm import get_cmap
-from pandas import read_csv
+import pandas
 import seaborn as sns
-# %% Extra functions
+
+
+def accumulationFit(t, P, T):
+    return P * (1 - np.exp(-t / T))
+
+
+def velocityFit(t, P0, Pend, T):
+    return P0 * np.exp(-t / T) + Pend
+
 
 cmap = sns.color_palette("rocket", as_cmap=True)
 
-def getColorFromId(id,N):
-    # if id == 1:
-    #     return 'red'
-    # else:
-    #     return 'blue'
-    return cmap((id-1)/N)
+data = pandas.read_csv('processed_data/experimental_data.csv')
+fits = pandas.read_csv('processed_data/fits.csv')
 
-def aveline(x_in,y_in,bins):
-    interv = bins[1]-bins[0]
-    x_out = list()
-    y_out = list()
-    for i in bins[1:]:
-        log = np.less_equal(x_in,i)
-        y_out.append(np.nanmean(y_in[log]))
-        x_out.append(i-interv/2)
-        x_in = x_in[np.logical_not(log)]
-        y_in = y_in[np.logical_not(log)]
-
-    return x_out,y_out
+things2plot = [
+    'velocity',
+    'equilibrium_density',
+    'number_of_ase1_gauss',
+    'number_of_ase1_exp',
+    'decay_lengthscale',
+]
 
 
-def accumulationFit(t,P,T):
-    return  P * (1 - np.exp(-t / T))
+for condition in pandas.unique(data.condition):
+    data_condition = data[data.condition == condition]
+    fits_condition = fits[fits.condition == condition].iloc[0].to_dict()
+    # For plotting the model
+    t = np.linspace(0, np.max(data_condition.time))
+    accumulation_fit = accumulationFit(t, fits_condition['accumulation_end_fit'], fits_condition['accumulation_timescale'])
 
-def velocityFit(t,P0,Pend,T):
-    return  P0 * np.exp(-t / T) + Pend
+    v0 = fits_condition['v_s_fit'] - fits_condition['shrinking_speed_steady_state']
+    velocity_fit = velocityFit(t, v0, fits_condition['shrinking_speed_steady_state'], fits_condition['velocity_decay_timescale'])
 
-# %% Load the data
-# Single or AP
+    def accumulationFit(t, P, T):
+        return P * (1 - np.exp(-t / T))
 
-for which_folder in ['AP','single']:
+    def velocityFit(t, P0, Pend, T):
+        return P0 * np.exp(-t / T) + Pend
 
-    df = read_csv(f'./data_{which_folder}.csv')
-    fits = read_csv(f'./{which_folder}_fits.csv')
+    for magnitude in things2plot:
+        plt.figure(figsize=[4, 4])
+        plt.title(condition)
+        for event in np.unique(data_condition['event_id']):
+            logi = data_condition['event_id'] == event
+            this_df = data_condition[logi]
+            color = cmap(list(this_df.event_nb)[0] / np.max(data_condition.event_nb) * 0.8)
+            plt.plot(this_df.time, this_df[magnitude], c=color)
 
-    # %% Colouring by event
+        if magnitude == 'velocity':
+            plt.plot(t, velocity_fit, color='black', lw=3)
+        if magnitude == 'number_of_ase1_exp':
+            plt.plot(t, accumulation_fit, color='black', lw=3)
 
-    plt.figure(figsize=[4,4])
-    N = np.max(df.event)-1
-    for trace in np.unique(df['trace']):
-        logi = df['trace']==trace
-        this_df = df[logi]
-        plt.plot(this_df.t,this_df.number_of_Ase1_norm,c=getColorFromId(this_df.event.iat[0],N))
+        plt.xlabel('time')
+        plt.ylabel(magnitude)
+        plt.xlim(xmin=0)
+        plt.ylim(ymin=0)
+        plt.tight_layout()
+        plt.savefig(f'plots/{condition}_time_vs_{magnitude}.svg')
 
-    # Binned data
-    xx,yy=aveline(df.t,df.number_of_Ase1_norm,range(0,60,5))
-    plt.scatter(xx,yy,c='black',zorder=1000,label='binned')
+    plt.figure(figsize=[4, 4])
+    plt.title(condition)
+    for event in np.unique(data_condition['event_id']):
+        logi = data_condition['event_id'] == event
+        this_df = data_condition[logi]
+        color = cmap(list(this_df.event_nb)[0] / np.max(data_condition.event_nb) * 0.8)
+        plt.scatter(this_df.number_of_ase1_exp, this_df['velocity'], c=color)
 
-    # Fits
-    t = np.linspace(0,50)
-    P = float(fits.accumulation_norm_end_fit)
-    T = float(fits.accumulation_norm_timescale)
-    y_fit = accumulationFit(t,P,T)
-
-    plt.plot(t,y_fit,c='black',lw=3,label='fit')
-
-
-    plt.ylabel("number of Ase1 norm")
-    plt.xlabel("time")
-    plt.legend()
+    plt.xlabel('ase1_accumulation')
+    plt.ylabel('velocity')
+    plt.xlim(xmin=0)
+    plt.ylim(ymin=0)
     plt.tight_layout()
-    plt.savefig(f'./{which_folder}_accumulation_norm.svg')
-
-    plt.figure(figsize=[4,4])
-    N = np.max(df.event)-1
-    for trace in np.unique(df['trace']):
-        logi = df['trace']==trace
-        this_df = df[logi]
-        plt.plot(this_df.t,this_df.number_of_Ase1,c=getColorFromId(this_df.event.iat[0],N))
-
-    # Binned data
-    xx,yy=aveline(df.t,df.number_of_Ase1,range(0,60,5))
-    plt.scatter(xx,yy,c='black',zorder=1000,label='binned')
-
-    # Fits
-    t = np.linspace(0,50)
-    P = float(fits.accumulation_end_fit)
-    T = float(fits.accumulation_timescale)
-    y_fit = accumulationFit(t,P,T)
-    plt.plot(t,y_fit,c='black',lw=3,label='fit')
-
-    plt.ylabel("Ase1 accumulation")
-    plt.xlabel("Time (s)")
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(f'./{which_folder}_accumulation.svg')
-
-    plt.figure(figsize=[4,4])
-    N = np.max(df.event)-1
-    timepoint_cut = 2
-    for trace in np.unique(df['trace']):
-        logi = np.logical_and(df['trace']==trace,df['timepoint']>timepoint_cut)
-        if not np.any(logi):
-            continue
-        this_df = df[logi]
-        plt.plot(this_df.t,this_df.velocity/1000.,c=getColorFromId(this_df.event.iat[0],N))
-    logi = df['timepoint']>timepoint_cut
-    xx,yy=aveline(df.t[logi],df.velocity[logi],range(0,60,5))
-    plt.scatter(xx,np.array(yy)/1000.,c='black',zorder=1000,label='binned')
-    print(np.min(df.t[logi]))
-    # Fits
-    t = np.linspace(7.5,50)
-    T = float(fits.velocity_decay_timescale)
-    v_s_fit = float(fits.v_s_fit)
-    shrinking_speed_steady_state = float(fits.shrinking_speed_steady_state)
-    print(v_s_fit,shrinking_speed_steady_state,T)
-    y_fit = velocityFit(t,v_s_fit,shrinking_speed_steady_state,T)
-    plt.plot(t,y_fit/1000.,c='black',lw=3,label='fit')
-
-    plt.ylabel("Velocity (\u03BCm/s)")
-    plt.xlabel("Time (s)")
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(f'./{which_folder}_speed.svg')
-
-
-
+    plt.savefig(f'plots/{condition}_ase1_accumulation_vs_velocity.svg')
 
 
 plt.show()

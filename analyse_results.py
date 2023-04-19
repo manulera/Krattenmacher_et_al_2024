@@ -24,7 +24,7 @@ def timeScaleFitFunction(t, P, T):
 
 
 def lengthScaleFitFunction(l, P, L):
-    return P * np.exp(-l/L)
+    return P * np.exp(-l / L)
 
 
 def velocityFit(t, P0, Pend, T):
@@ -49,7 +49,7 @@ def main(folder):
 
     # We also calculate its decay
     fit, _ = curve_fit(velocityFit, t, speed, [
-                       speed[0]-speed[-1], speed[-1], 1])
+                       speed[0] - speed[-1], speed[-1], 1])
     _, _, velocity_decay_timescale = tuple(fit)
 
     # We calculate and export the accumulated ase1 (over the equilibrium value, alpha)
@@ -74,7 +74,7 @@ def main(folder):
 
     with open(os.path.join(folder, "parameters_table.txt"), "w") as out:
         out.write(
-            f'omega,cooperativity,kon,v_s\n{p.omega},{p.cooperativity},{p.kon},{p.v_s}\n')
+            f'omega,cooperativity,kon,v_s,D,tip_off,cooperativity_mode\n{p.omega},{p.cooperativity},{p.kon},{p.v_s},{p.D},{p.tip_off},{p.cooperativity_mode}\n')
 
 
 # ------------------------------------------------------------------------

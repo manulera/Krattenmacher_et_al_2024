@@ -1,0 +1,9 @@
+lattice_size = 0.008
+ase1_diffusion_single_mt = 0.09
+shrinkage_velocity_no_ase1 = 0.39
+kon_single_mt_6nM = 0.00224
+kon_single_mt_1nM = 0.00012
+ase1_koff = 0.016
+kon_overlap_2pf = 0.05164
+kon_overlap_3pf = 0.01658
+ase1_diffusion_overlap = 0.011

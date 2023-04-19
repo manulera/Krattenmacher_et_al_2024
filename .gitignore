@@ -13,4 +13,10 @@ tex_document/main.synctex.gz
 /scan/
 *.pyc
 /parameter_scan/*/scan/
+/parameter_scan2/*/scan/
+/parameter_scan3/*/scan/
 /parameter_scan_overlap/*/scan/
+/parameter_scan_overlap/*/plots/
+experimental_data/plots
+/figures_revision/*.svg
+.venv/

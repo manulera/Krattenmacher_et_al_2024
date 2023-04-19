@@ -1,0 +1,9 @@
+condition	equilibrium_density	protofilaments	kon	alpha
+1nM	0.01165	13	0.00012	0.00717
+6nM	0.19992	13	0.00224	0.12303
+antiparallel	0.19086	1	-0.04637	1.52688
+antiparallel	0.19086	2	0.05164	0.76344
+antiparallel	0.19086	3	0.01658	0.50896
+parallel	0.07323	1	0.02263	0.58584
+parallel	0.07323	2	0.00663	0.29292
+parallel	0.07323	3	0.00388	0.19528

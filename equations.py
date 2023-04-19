@@ -2,7 +2,8 @@ import numpy as np
 from scipy.integrate import odeint
 from scipy.optimize import fsolve
 
-def scaleVelocity(P,omega,cooperativity,cooperativity_mode):
+
+def scaleVelocity(P, omega, cooperativity, cooperativity_mode):
     """
     Apply the scaling factor to the velocity depending of occupancy of the lattice, different for each model.
      * none: model 1
@@ -11,39 +12,46 @@ def scaleVelocity(P,omega,cooperativity,cooperativity_mode):
      * mixed: model 3
     """
     if cooperativity_mode == 'none':
-        return (1.-P[0]) + P[0] * (1.-omega)
-    
-    # The speed is slow if any of the first N sites is occupied.
+        return (1. - P[0]) + P[0] * (1. - omega)
+
+    # The speed is slow if any of the first N sites is occupied. (Model 2)
     elif cooperativity_mode == 'protofilament':
         P_allfree = 1
         for i in range(cooperativity):
-            P_allfree*=(1-P[i])
-    
-    # Phenomenological model
+            P_allfree *= (1 - P[i])
+
+    # Phenomenological model where only terminal subunits matters (not used)
     elif cooperativity_mode == 'exponent':
-        P_allfree=np.power(1-P[0],cooperativity)
-    
-    # Mixed model
+        P_allfree = np.power(1 - P[0], cooperativity)
+
+    # Phenomenological model where N terminal sites matter (Model 3)
     elif cooperativity_mode == 'mixed':
         P_allfree = 1
         for i in range(cooperativity):
-            P_allfree *= np.power((1-P[i]),3)
-    
-    return P_allfree + (1-P_allfree) * (1.-omega)
+            P_allfree *= np.power((1 - P[i]), 3)
 
-def myODE(P, t,p):
+    # Phenomenological model where N terminal sites matter (Model 3 adapted to antiparallel)
+    elif cooperativity_mode == 'mixed_antiparallel':
+        P_allfree = 1
+        for i in range(cooperativity):
+            P_allfree *= np.power((1 - P[i]), 2)
+
+    return P_allfree + (1 - P_allfree) * (1. - omega)
+
+
+def myODE(P, t, p):
     """
     Discrete differential equation dP/dt, with the special cases of P1 and PN, as shown in the paper
     """
     k0 = p.depol_rate
-    kh = p.k_D/2
+    kh = p.k_D / 2
     kon = p.kon
     koff = p.koff
     omega = p.omega
 
     dP = np.zeros_like(P)
 
-    kd = k0 * (1.-P[0]) + k0 * P[0] * (1.-omega)
+    kd = k0 * (1. - P[0]) + k0 * P[0] * (1. - omega)
 
     # For all except position 1 and position N-1
 
@@ -51,7 +59,7 @@ def myODE(P, t,p):
     dP[-1] = 0
 
     # dP1/dt as shown in the paper
-    dP[0] = kh * (P[1]-P[0]) - P[0] * koff + (1. - P[0]) * kon + kd * P[1] - k0 * P[0] * (1. - omega)
+    dP[0] = kh * (P[1] - P[0]) - P[0] * (koff + p.tip_off) + (1. - P[0]) * kon + kd * P[1] - k0 * P[0] * (1. - omega)
 
     # Pi (excluding 1 and N-1)
     Pi = P[1:-1]
@@ -65,21 +73,22 @@ def myODE(P, t,p):
 
     return dP
 
-def myODE_cooperativity(P, t,p):
-    
+
+def myODE_cooperativity(P, t, p):
+
     k0 = p.depol_rate
-    kh = p.k_D/2
+    kh = p.k_D / 2
     kon = p.kon
     koff = p.koff
     omega = p.omega
 
     dP = np.zeros_like(P)
-    
+
     # The scaleVelocity function adjust kd depending on the model
-    kd = k0 * scaleVelocity(P,omega,p.cooperativity,p.cooperativity_mode)
+    kd = k0 * scaleVelocity(P, omega, p.cooperativity, p.cooperativity_mode)
 
     # For all except position 1 and position N-1
-    
+
     # dPN/dt as shown in the paper
     dP[-1] = 0
 
@@ -89,7 +98,7 @@ def myODE_cooperativity(P, t,p):
     # sites are free
 
     # dP1/dt as shown in the paper
-    dP[0] = kh * (P[1]-P[0]) - P[0] * koff + (1. - P[0]) * kon + kd * P[1] - k0 * P[0] * (1. - omega)
+    dP[0] = kh * (P[1] - P[0]) - P[0] * (koff + p.tip_off) + (1. - P[0]) * kon + kd * P[1] - k0 * P[0] * (1. - omega)
 
     # Pi (excluding 1 and N-1)
     Pi = P[1:-1]
@@ -103,7 +112,8 @@ def myODE_cooperativity(P, t,p):
 
     return dP
 
-def solveDiscrete(p,t,N):
+
+def solveDiscrete(p, t, N):
     """
     Calculates the evolution of P with the differential equation myODE, starting from all the lattice sites
     equal to alpha (binding equilibrium)
@@ -126,12 +136,13 @@ def read_simulation():
         for line in ins:
             ls = line.split()
             t.append(float(ls[0]))
-            out.append(np.array(ls[1:],dtype=int))
+            out.append(np.array(ls[1:], dtype=int))
     with open("depol.txt") as ins:
         for line in ins:
-            depol_times = np.array(line.split(),dtype=float)
+            depol_times = np.array(line.split(), dtype=float)
 
-    return t,out,depol_times
+    return t, out, depol_times
+
 
 def numerical_prediction(p):
     """
@@ -139,23 +150,23 @@ def numerical_prediction(p):
     :param p:
     :return:
     """
-    k0 = p.depol_rate / (p.kon+p.koff)
-    kh = p.k_D / 2. / (p.kon+p.koff)
+    k0 = p.depol_rate / (p.kon + p.koff)
+    kh = p.k_D / 2. / (p.kon + p.koff)
     omega = p.omega
     alpha = p.alpha
 
-
     def eq2solve(rho0):
-        kd = alpha*(rho0 * (1. - omega) * k0 + (1. / alpha - rho0) * k0)
+        kd = alpha * (rho0 * (1. - omega) * k0 + (1. / alpha - rho0) * k0)
 
         Pint = -2. * kh * (1 - rho0) / (kd + np.sqrt(kd * kd + 4. * kh))
 
         return kd - rho0 * (1. - omega) * k0 - Pint
 
-    P0_sol = fsolve(eq2solve,20.)[0]*alpha
-    kd_sol = k0*(1. - P0_sol) + k0*P0_sol*(1. - omega)
+    P0_sol = fsolve(eq2solve, 20.)[0] * alpha
+    kd_sol = k0 * (1. - P0_sol) + k0 * P0_sol * (1. - omega)
 
-    return kd_sol,P0_sol
+    return kd_sol, P0_sol
+
 
 def decayLength(p, kd):
     """

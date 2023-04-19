@@ -62,10 +62,13 @@ class Parameters:
         # Unbinding rate of Ase1
         self.koff = 0.
 
-        # Cooperativity
+        # Hopping of Ase1 at the tip (Not implemented in gillespie simulation)
+        self.tip_off = 0.
+
+        # Cooperativity (Not implemented in gillespie simulation)
         self.cooperativity = 1
 
-        # Cooperativity mode: `none`, `protofilament`, `exponent` or `mixed`
+        # Cooperativity mode: `none`, `protofilament`, `exponent` or `mixed` (Not implemented in gillespie simulation)
         self.cooperativity_mode = 'none'
 
         # Initial conditions ==========================================================
@@ -140,12 +143,15 @@ class Parameters:
 
                     elif ls[0] == "t_snap":
                         self.t_snap = float(ls[1])
-                    
+
                     elif ls[0] == "cooperativity":
                         self.cooperativity = int(ls[1])
-                    
+
                     elif ls[0] == "cooperativity_mode":
                         self.cooperativity_mode = ls[1].strip()
+
+                    elif ls[0] == "tip_off":
+                        self.tip_off = float(ls[1].strip())
 
                     else:
                         raise ValueError("Unkwon parameter: " + ls[0])
@@ -176,6 +182,7 @@ class Parameters:
         out += "t_snap = %f\n" % self.t_snap
         out += "cooperativity = %i\n" % self.cooperativity
         out += "cooperativity_mode = %s\n" % self.cooperativity_mode
+        out += "tip_off = %f\n" % self.tip_off
 
     def print_for_file(self):
         """
@@ -183,9 +190,9 @@ class Parameters:
         :return:
         """
         out = ""
-        out+="a|v_s|omega|D|kon|koff|L_init|do_equilibration|t_max|t_snap|cooperativity\n"
+        out+="a|v_s|omega|D|kon|koff|L_init|do_equilibration|t_max|t_snap|cooperativity|tip_off\n"
 
-        extra = [self.a,self.v_s,self.omega,self.D,self.kon,self.koff,self.L_init,self.do_equilibration,self.t_max,self.t_snap,self.cooperativity]
+        extra = [self.a,self.v_s,self.omega,self.D,self.kon,self.koff,self.L_init,self.do_equilibration,self.t_max,self.t_snap,self.cooperativity, self.tip_off]
         extra = map(str,extra)
 
         out+= "|".join(extra)+"\n"
