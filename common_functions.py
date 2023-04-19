@@ -11,6 +11,7 @@ def load_simulation_results(folder):
     data['cooperativity'] = parameters['cooperativity'].astype(int)
     data['cooperativity_mode'] = parameters['cooperativity_mode']
     data['D'] = parameters['D'].astype(float)
+    data['lengthscale_density_end_fit'] = data['lengthscale_density_end_fit'] * 0.008
     return data
 
 

@@ -127,20 +127,18 @@ for condition, protofilaments in args:
 
 
     plt.legend(loc='best')
-    if condition == '6nM':
-        plt.ylim([0, 40])
-    elif condition == '1nM':
-        plt.ylim([0, 15])
-    elif protofilaments == 2:
-        plt.ylim([0, 10])
-    elif protofilaments == 3:
-        plt.ylim([0, 25])
-
     plt.ylim([0, 40])
 
     plt.xlim(xmin=0)
     plt.tight_layout()
     # plt.title(f'{condition} - {protofilaments} pfs')
     plt.savefig(f'figures_revision/{condition}_pf{protofilaments}_speed_vs_timescale.svg')
+
+    plt.figure()
+    for model, name, ls, chosen_val in zip(models, model_names, linestyles, chosen_vals):
+        sns.lineplot(x='omega', y='lengthscale_density_end_fit', data=model, ls=ls, color='black', label=name)
+        d = model[model["omega"] == chosen_val]
+        plt.scatter(d['omega'], d['lengthscale_density_end_fit'], c='k', s=20, marker='s')
+
 
 plt.show()
