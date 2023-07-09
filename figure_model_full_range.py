@@ -42,7 +42,7 @@ for condition, protofilaments in args:
         model_3 = data[(data.cooperativity == 3) & (data.cooperativity_mode == 'mixed')].copy()
 
         models = [model_1, model_2]
-        chosen_vals = [0.96, 0.9]
+        chosen_vals = [0.95, 0.9]
 
     elif condition == '1nM':
         data = load_simulation_results(f'parameter_scan3/runs_1nM').drop_duplicates()
@@ -51,7 +51,7 @@ for condition, protofilaments in args:
         model_3 = data[(data.cooperativity == 4) & (data.cooperativity_mode == 'mixed')].copy()
 
         models = [model_1, model_2]
-        chosen_vals = [0.96, 0.9]
+        chosen_vals = [0.95, 0.9]
 
     elif condition == 'antiparallel':
         data = load_simulation_results(f'parameter_scan3/runs_overlaps_{protofilaments}pf').drop_duplicates()
