@@ -40,9 +40,9 @@
      inkscape:window-height="1346"
      id="namedview35807"
      showgrid="false"
-     inkscape:zoom="1.1475097"
-     inkscape:cx="138.22463"
-     inkscape:cy="473.33036"
+     inkscape:zoom="1.6228238"
+     inkscape:cx="286.73982"
+     inkscape:cy="372.39259"
      inkscape:window-x="1440"
      inkscape:window-y="23"
      inkscape:window-maximized="1"
@@ -4435,62 +4435,62 @@
   <image
      sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/6nM_pf13_speed_dynamics.svg"
      xlink:href="figures_revision/6nM_pf13_speed_dynamics.svg"
-     y="388.19199"
-     x="60"
-     id="image165197"
-     height="216.00002"
-     width="270"
+     preserveAspectRatio="none"
      inkscape:svg-dpi="96"
-     preserveAspectRatio="none" />
+     width="270"
+     height="216.00002"
+     id="image165197"
+     x="60"
+     y="388.19199" />
   <g
      id="g313171"
      transform="translate(15.455956,7.5319526)">
     <image
        sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/model2_simulated_kymograph.svg"
        xlink:href="figures_revision/model2_simulated_kymograph.svg"
-       transform="translate(0,-34.5)"
-       clip-path="url(#clipPath608266)"
-       style="fill:none;stroke:#000000"
-       y="264.86642"
-       x="-10.642636"
-       id="image201146"
-       height="160.3125"
-       width="256.5"
+       preserveAspectRatio="none"
        inkscape:svg-dpi="96"
-       preserveAspectRatio="none" />
+       width="256.5"
+       height="160.3125"
+       id="image201146"
+       x="-10.642636"
+       y="264.86642"
+       style="fill:none;stroke:#000000"
+       clip-path="url(#clipPath608266)"
+       transform="translate(0,-34.5)" />
     <image
        sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/model1_simulated_kymograph.svg"
        xlink:href="figures_revision/model1_simulated_kymograph.svg"
-       style="stroke-width:0.561938;stroke-miterlimit:4;stroke-dasharray:0.561938, 0.561938;stroke-dashoffset:0"
-       clip-path="url(#clipPath552251)"
-       y="126.91098"
-       x="-10.642636"
-       id="image34440"
-       height="160.3125"
-       width="256.5"
+       preserveAspectRatio="none"
        inkscape:svg-dpi="96"
-       preserveAspectRatio="none" />
+       width="256.5"
+       height="160.3125"
+       id="image34440"
+       x="-10.642636"
+       y="126.91098"
+       clip-path="url(#clipPath552251)"
+       style="stroke-width:0.561938;stroke-miterlimit:4;stroke-dasharray:0.561938, 0.561938;stroke-dashoffset:0" />
   </g>
   <image
      sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/6nM_pf13_accumulation_dynamics.svg"
      xlink:href="figures_revision/6nM_pf13_accumulation_dynamics.svg"
-     y="382.84686"
-     x="364.28983"
-     id="image160911"
-     height="216.00002"
-     width="270"
+     preserveAspectRatio="none"
      inkscape:svg-dpi="96"
-     preserveAspectRatio="none" />
+     width="270"
+     height="216.00002"
+     id="image160911"
+     x="364.28983"
+     y="382.84686" />
   <image
      sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/6nM_pf13_speed_vs_accumulation.svg"
      xlink:href="figures_revision/6nM_pf13_speed_vs_accumulation.svg"
-     y="166.84683"
-     x="244.28983"
-     id="image168973"
-     height="216.00002"
-     width="216.00002"
+     preserveAspectRatio="none"
      inkscape:svg-dpi="96"
-     preserveAspectRatio="none" />
+     width="216.00002"
+     height="216.00002"
+     id="image168973"
+     x="244.28983"
+     y="166.84683" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:30px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
@@ -4549,13 +4549,13 @@
   <image
      sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/figures_revision/6nM_pf13_speed_vs_timescale.svg"
      xlink:href="figures_revision/6nM_pf13_speed_vs_timescale.svg"
-     y="166.84683"
-     x="478.28983"
-     id="image171359"
-     height="216.00002"
-     width="216.00002"
+     preserveAspectRatio="none"
      inkscape:svg-dpi="96"
-     preserveAspectRatio="none" />
+     width="216.00002"
+     height="216.00002"
+     id="image171359"
+     x="478.28983"
+     y="166.84683" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:30px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
@@ -4592,13 +4592,13 @@
   <image
      sodipodi:absref="/Users/manu/Documents/Projects/Krattenmacher_et_al_2021/cartoon.svg"
      xlink:href="cartoon.svg"
-     y="16.621199"
-     x="58.022995"
-     id="image1981"
-     height="114.86787"
-     width="548.56189"
+     preserveAspectRatio="none"
      inkscape:svg-dpi="96"
-     preserveAspectRatio="none" />
+     width="548.56189"
+     height="114.86787"
+     id="image1981"
+     x="58.022995"
+     y="16.621199" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:30px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
@@ -4610,4 +4610,26 @@
        x="198.79402"
        y="485.60184"
        style="stroke-width:0.75" /></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:15.68629999999999924px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.392155;"
+     x="172.04913"
+     y="193.51198"
+     id="text35031"><tspan
+       sodipodi:role="line"
+       id="tspan35029"
+       x="172.04913"
+       y="193.51198"
+       style="stroke-width:0.392155;fill:#ffffff;">Model 1</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:15.68629999999999924px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.392155;"
+     x="172.04913"
+     y="297.23538"
+     id="text35031-8"><tspan
+       sodipodi:role="line"
+       id="tspan35029-4"
+       x="172.04913"
+       y="297.23538"
+       style="stroke-width:0.392155;fill:#ffffff;">Model 2</tspan></text>
 </svg>

@@ -26,14 +26,15 @@ data.rename(inplace=True, columns={
     'equilibrium density (1/nm)': 'equilibrium_density',
     'number of Ase1 molecules at tip fitted with gaussian (1)': 'number_of_ase1_gauss',
     'number of Ase1 molecules at tip fitted with exponential (1)': 'number_of_ase1_exp',
+    'number of Ase1 molecules at tip fitted with exponential - median of number of isolated Ase1 molecules in same movie at same time (1)': 'number_of_ase1_exp2',
     'lengthscale of exponential decay (nm)': 'decay_lengthscale',
     'condition': 'condition',
 })
 
-# Scale the Ase1 signal with new calibration
-data['equilibrium_density'] = data['equilibrium_density'] * 2.74
-data['number_of_ase1_gauss'] = data['number_of_ase1_gauss'] * 2.74
-data['number_of_ase1_exp'] = data['number_of_ase1_exp'] * 2.74
+# For the antiparallel overlaps, we use the number of Ase1 molecules at tip fitted with exponential - median of
+# number of isolated Ase1 molecules in same movie at same time (1)
+data.loc[data.condition == 'antiparallel', 'number_of_ase1_exp'] = data.loc[data.condition == 'antiparallel', 'number_of_ase1_exp2']
+data.drop(columns='number_of_ase1_exp2', inplace=True)
 
 # We add extra columns with integers to indicate the timepoint per event
 # and the nb of event within the condition.

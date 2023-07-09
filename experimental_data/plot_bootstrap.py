@@ -42,4 +42,4 @@ for condition in pandas.unique(bootstrap_data.condition):
 output_data = pandas.DataFrame(output_data_list)
 output_data.to_csv('processed_data/bootstrap_confidence_intervals.csv', index=False)
 
-plt.show()
+# plt.show()
