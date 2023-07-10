@@ -39,4 +39,4 @@ The following fitted parameters are used to fit with the model:
 * shrinking_speed_steady_state: mean of the shrinking speed after twenty seconds of shrinkage.
 * The confidence intervals come from bootstrapping the data and are summarised in `processed_data/bootstrap_fits.csv`
 
-> Note: For the antiparallel movies, instead of `number_of_ase1_exp`, we use the column `number of Ase1 molecules at tip fitted with exponential - median of number of isolated Ase1 molecules in same movie at same time (1)`
+> Note: For the antiparallel movies, instead of `number_of_ase1_exp`, we use the column `number of Ase1 molecules at tip fitted with exponential - median of number of isolated Ase1 molecules in same movie at same time (1)`, see the line starting with `data.loc[data.condition == 'antiparallel', 'number_of_ase1_exp']` in `process_excel_file.py`.

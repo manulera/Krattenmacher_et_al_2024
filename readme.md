@@ -28,57 +28,60 @@ To create the configuration files for the simulation, you will also need the pyt
 
 ## Analysing experimental data
 
-To reproduce the analysis, move to `experimental_data`.
-
-1. The raw data is the folders `time_*` (received from collaborators). By running `reformat_data.py`, you collect all the data and put it in the files `data_AP.csv` and `data_single.csv`, corresponding to antiparallel and single microtubules.
-2. To fit the experimental data to the equations mentioned in the main text, call `fit_experimental_data.py`. This will generate `AP_fits.csv` and `single_fits.csv`.
-3. You can also call `experimental_data_bootstrap.py` and `plot_bootstrap_data.py` for a bootstrap analysis.
-4. You can plot the experimental data calling `plot_experimental_data.py` (this uses the fitted data to plot).
+To reproduce the experimental analysis, move to `experimental_data`. The code is documented in `experimental_data/readme.md`
 
 ## Solving the equations of the different models
 
 The script that evolves the discrete equation is `solve_discrete_equation.py`. See the script, as well as the python file `equations.py`. Note the function `scaleVelocity`, which is used to calculate the shrinkage speed depending on the model.
 
-To reproduce the analysis, move to `parameter_scan`.
+To reproduce the analysis, move to `parameter_scan3`.
 
-1. Each folder named `runs_*` before running the scripts only contains one file `config.txt.tpl`: a template configuration file that contains a set of parameters to be scanned. See `preconfig`, mentioned above. You can read the `config.txt.tpl` file, variables are self-explaining. The folders that were used for the paper:
-    * `runs_coop?`: Model 1 and Model 2
-    * `runs_special_coop?`: Model 3
+1. Each folder named `runs_*` before running the scripts only contains one file `config.txt.tpl`: a template configuration file that contains a set of parameters to be scanned. See `preconfig`, mentioned above. You can read the `config.txt.tpl` file, variables are self-explaining.
+
 2. See the bash script `run_scan.sh` which:
-    * Can be run calling `run_scan.sh runs_coop1` (or whatever). Does not take multiple arguments.
+    * Can be run calling `run_scan.sh runs_1nM` (or whatever). Does not take multiple arguments.
     * Removes the old solutions, if they exist.
     * Generates new configuration files with all combinations of parameters, and puts them in folders named `scan/run????`.
     * Runs `solve_discrete_equation.py` in each of those folders.
 3. See the bash script `run_analysis.sh` which:
     * Calls `analyse_results` in each folder `scan/run????`.
     * Collects the results and parameters of simulations in `other_values.txt` and `parameters_table.txt`.
-4. To reproduce the figures of the paper, call `figure_francois.py`. There are other graphs to be plotted, see the other python scripts.
 
-Finally, once you have ran `run_scan.sh` in all folders, to reproduce the kymograph and supplementary figure, go to the main folder and run `draw_kymograph.py`.
+## Reproducing the figures of the paper
+
+These are the output fo the following scripts:
+
+```bash
+python draw_kymograph.py
+python figure_model_dynamics.py
+python figure_model_full_range.py
+```
+
+The individual panels are stored in `figures_revision`, and their included by reference using Inkscape in the figure files `main_figure.svg` and `supplemental_figure.svg`.
 
 ## Simulation
 
 There is a 1-D simulation (see `sim.py`) to show that the mean field approach is valid. In other words, that the discrete equation reproduces the simulation results. In the end we did not use it in the paper, but it is well documented in the file and here we provide a brief description.
 
-## Simulation Program
+### Simulation Program
 
 The program is in the file `simulation.py`. It contains the code that can be imported into other python scripts to run the simulation in them.
 
 It contains three things:
 
-### timeToNextEvent
+#### timeToNextEvent
 
 This is just a function to calculate a stochastic time until the next event using Gillespie algorithm. If a process has a certain rate, we can sample the probability distribution of time until that event with random numbers, using `log(r)/rate`, where `r` is a random number, and `rate` is the rate of the process. If many objects have the same rate, then we multiply the rate by the number of objects, to get the time where a random one of them will undergo the event.
 
-### Parameters
+#### Parameters
 
 This is a python class used to store the parameters of the simulation and the initial conditions. It has several fields. All units expressed in um and s, see the file for what they are.
 
-### Simulation
+#### Simulation
 
 The simulation class.
 
-### The simulation algorithm
+#### The simulation algorithm
 
 > **_NOTE:_** Some of the variable/method names mentioned here might have changed, but the essence of the simulation is the same.
 
@@ -101,11 +104,3 @@ The events:
 In the cases where events do not happen, the function returns 0, and not the time calculated, since the event did not happen. 
 
 This function is called recursively until the simulation time is bigger than `t_max`. Also, every `t_snap` seconds, a snapshot of the simulation is added to a list, that is then the output of `Simulation.run`.
-
-
-## Experimental parameters for the simulations
-
-* k_off was experimentally determined: 0.016 s-1.
-* k_on is calculated with experimental_data/get_kon.py, using the equilibrium density of Ase1 in the different conditions, assuming k_off does not change.
-* v_s was determined experimentally: 0.44 um/s.
-* D = 0.09 um2/s from the reference indicated in the paper.
