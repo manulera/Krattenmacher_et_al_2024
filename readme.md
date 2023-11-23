@@ -47,6 +47,8 @@ To reproduce the analysis, move to `parameter_scan3`.
     * Calls `analyse_results` in each folder `scan/run????`.
     * Collects the results and parameters of simulations in `other_values.txt` and `parameters_table.txt`.
 
+> NOTE: if you cannot run the scripts in your bash terminal, it may be because of the parallelising code. You can set `jobs=1` in `run_analysis.sh` and `run_scan.sh`.
+
 ## Reproducing the figures of the paper
 
 These are the output fo the following scripts:
