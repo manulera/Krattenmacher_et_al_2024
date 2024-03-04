@@ -1,5 +1,5 @@
-condition,accumulation_end_fit,accumulation_timescale,velocity_decay_timescale,v_s_fit,shrinking_speed_steady_state,shrinking_speed_steady_state_ci
-1nM,2.160E+01,6.105E+00,7.854E+04,2.667E+02,2.259E+02,3.415E+01
-6nM,1.855E+02,7.242E+00,1.207E+01,1.653E+02,1.372E+02,1.637E+01
-antiparallel,3.087E+01,2.397E+00,3.708E+01,1.618E+02,1.171E+02,1.085E+01
-parallel,1.625E+02,5.750E+01,3.183E+01,3.172E+02,2.060E+02,6.807E+01
+condition,accumulation_end_fit,accumulation_timescale,velocity_decay_timescale,v_s_fit,shrinking_speed_steady_state
+1nM,2.160E+01,6.105E+00,7.854E+04,2.667E+02,2.259E+02
+6nM,1.855E+02,7.242E+00,1.207E+01,1.653E+02,1.372E+02
+antiparallel,3.087E+01,2.397E+00,3.708E+01,1.618E+02,1.171E+02
+parallel,1.625E+02,5.750E+01,3.183E+01,3.172E+02,2.060E+02

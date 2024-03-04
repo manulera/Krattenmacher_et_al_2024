@@ -27,7 +27,6 @@ for condition, protofilaments in args:
     # fits2experiments['condition'] = fits2experiments['condition'].apply(lambda x: 'Ase1 ' + x)
     fits2experiments.fillna(0, inplace=True)
     fits2experiments['shrinking_speed_steady_state'] = fits2experiments['shrinking_speed_steady_state'] / 1000.
-    fits2experiments['shrinking_speed_steady_state_ci'] = fits2experiments['shrinking_speed_steady_state_ci'] / 1000.
     fits2experiments['accumulation_end_fit'] = fits2experiments['accumulation_end_fit'] / protofilaments
 
     # Confidence intervals

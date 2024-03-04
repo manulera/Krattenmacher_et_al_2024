@@ -1,7 +1,7 @@
 import pandas
 from matplotlib import pyplot as plt
 import numpy as np
-
+import os
 
 bootstrap_data = pandas.read_csv('processed_data/bootstrap_fits.csv')
 whole_experiment_fits = pandas.read_csv('processed_data/fits.csv')
@@ -13,6 +13,10 @@ things2plot = [
     'v_s_fit',
     'shrinking_speed_steady_state',
 ]
+
+# Directory to store histograms with plots (not in git)
+if not os.path.isdir('./plots/bootstrap'):
+    os.makedirs('./plots/bootstrap')
 
 output_data_list = list()
 

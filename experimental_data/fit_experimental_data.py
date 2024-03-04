@@ -49,7 +49,6 @@ def get_fits(d, condition):
         'velocity_decay_timescale': params_velocity[2],
         'v_s_fit': params_velocity[0] + params_velocity[1],
         'shrinking_speed_steady_state': np.nanmean(velocity_data),
-        'shrinking_speed_steady_state_ci': 1.96 * np.nanstd(velocity_data) / np.sqrt(np.size(velocity_data))
     }
 
     return row
