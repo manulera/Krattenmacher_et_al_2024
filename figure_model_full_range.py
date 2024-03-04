@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pandas
 from figure_matplotlib_settings import matplotlib_settings, get_confidence_intervals, plot_confidence_interval
 from common_functions import load_simulation_results
+from selected_values import omega_single_model1, omega_single_model2, cooperativity_single_model1, cooperativity_single_model2
 
 plot_intervals = True
 
@@ -36,27 +37,24 @@ for condition, protofilaments in args:
     if condition == '6nM':
         # model 1 and 2
         data = load_simulation_results(f'parameter_scan3/runs_6nM').drop_duplicates()
-        model_1 = data[(data.cooperativity == 1) & (data.cooperativity_mode == 'protofilament')].copy()
-        model_2 = data[(data.cooperativity == 3) & (data.cooperativity_mode == 'protofilament')].copy()
-        model_3 = data[(data.cooperativity == 3) & (data.cooperativity_mode == 'mixed')].copy()
+        model_1 = data[(data.cooperativity == cooperativity_single_model1) & (data.cooperativity_mode == 'protofilament')].copy()
+        model_2 = data[(data.cooperativity == cooperativity_single_model2) & (data.cooperativity_mode == 'protofilament')].copy()
 
         models = [model_1, model_2]
-        chosen_vals = [0.95, 0.9]
+        chosen_vals = [omega_single_model1, omega_single_model2]
 
     elif condition == '1nM':
         data = load_simulation_results(f'parameter_scan3/runs_1nM').drop_duplicates()
-        model_1 = data[(data.cooperativity == 1) & (data.cooperativity_mode == 'protofilament')].copy()
-        model_2 = data[(data.cooperativity == 3) & (data.cooperativity_mode == 'protofilament')].copy()
-        model_3 = data[(data.cooperativity == 4) & (data.cooperativity_mode == 'mixed')].copy()
+        model_1 = data[(data.cooperativity == cooperativity_single_model1) & (data.cooperativity_mode == 'protofilament')].copy()
+        model_2 = data[(data.cooperativity == cooperativity_single_model2) & (data.cooperativity_mode == 'protofilament')].copy()
 
         models = [model_1, model_2]
-        chosen_vals = [0.95, 0.9]
+        chosen_vals = [omega_single_model1, omega_single_model2]
 
     elif condition == 'antiparallel':
         data = load_simulation_results(f'parameter_scan3/runs_overlaps_{protofilaments}pf').drop_duplicates()
         model_1 = data[(data.cooperativity == 1) & (data.cooperativity_mode == 'protofilament')].copy()
         model_2 = data[(data.cooperativity == 3) & (data.cooperativity_mode == 'protofilament')].copy()
-        model_3 = data[(data.cooperativity == 4) & (data.cooperativity_mode == 'mixed_antiparallel')].copy()
 
         models = [model_1, model_2]
         chosen_vals = [pandas.NA, pandas.NA]
@@ -80,7 +78,7 @@ for condition, protofilaments in args:
     )
 
     x_ci = get_confidence_intervals(fits2experiments, data_intervals, condition, 'accumulation_end_fit')
-    y_ci = get_confidence_intervals(fits2experiments, data_intervals, condition, 'shrinking_speed_steady_state')
+    y_ci = get_confidence_intervals(fits2experiments, data_intervals, condition, 'shrinking_speed_steady_state') / 1000.
     print(y_ci)
 
     plot_confidence_interval(plt, fits2experiments.accumulation_end_fit, fits2experiments.shrinking_speed_steady_state, x_ci, y_ci)
@@ -140,4 +138,4 @@ for condition, protofilaments in args:
         plt.scatter(d['omega'], d['lengthscale_density_end_fit'], c='k', s=20, marker='s')
 
 
-plt.show()
+# plt.show()

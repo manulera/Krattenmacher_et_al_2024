@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import pandas
 from figure_matplotlib_settings import matplotlib_settings
 from common_functions import aveline
+from selected_values import folder_dynamics_1nM_model1, folder_dynamics_6nM_model1, folder_dynamics_1nM_model2, folder_dynamics_6nM_model2
 
 matplotlib_settings(plt)
 
@@ -16,8 +17,8 @@ for condition, protofilaments in args:
     if condition == '6nM':
 
         folders = [
-            'parameter_scan3/runs_6nM/scan/run0019',
-            'parameter_scan3/runs_6nM/scan/run0145',
+            folder_dynamics_6nM_model1,
+            folder_dynamics_6nM_model2,
         ]
         names = ['Model 1', 'Model 2']
         linestyles = [':', '-']
@@ -25,8 +26,8 @@ for condition, protofilaments in args:
     elif condition == '1nM':
 
         folders = [
-            'parameter_scan3/runs_1nM/scan/run0019',
-            'parameter_scan3/runs_1nM/scan/run0145',
+            folder_dynamics_1nM_model1,
+            folder_dynamics_1nM_model2,
         ]
         names = ['Model 1', 'Model 2']
         linestyles = [':', '-']

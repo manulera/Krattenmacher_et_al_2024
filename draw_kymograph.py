@@ -4,14 +4,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from simulation import Parameters
 from figure_matplotlib_settings import matplotlib_settings
-
+from selected_values import folder_dynamics_1nM_model1, folder_dynamics_6nM_model1, folder_dynamics_1nM_model2, folder_dynamics_6nM_model2
 matplotlib_settings(plt)
 
 cmap = sns.color_palette("rocket", as_cmap=True)
 
 folders = [
-    'parameter_scan3/runs_6nM/scan/run0019',
-    'parameter_scan3/runs_6nM/scan/run0145',
+    folder_dynamics_6nM_model1,
+    folder_dynamics_6nM_model2,
 ]
 names = ['Model 1', 'Model 2']
 linestyles = ['-','--',':']

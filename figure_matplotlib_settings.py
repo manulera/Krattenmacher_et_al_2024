@@ -11,10 +11,7 @@ def matplotlib_settings(plt):
 def get_confidence_intervals(fits2experiments, bootstrap_data, condition, magnitude):
 
     vals = bootstrap_data.loc[(bootstrap_data.condition == condition) & (bootstrap_data.magnitude == magnitude), ['lower', 'upper']].iloc[0].values
-    if magnitude == 'shrinking_speed_steady_state':
-        return np.array(vals).reshape(2, 1) / 1000.
-    else:
-        return np.array(vals).reshape(2, 1)
+    return np.array(vals).reshape(2, 1)
 
 
 def plot_confidence_interval(plt, x_value, y_value, x_ci, y_ci, *args):
