@@ -47,9 +47,11 @@ To reproduce the analysis, move to `parameter_scan3`.
     * Calls `analyse_results` in each folder `scan/run????`.
     * Collects the results and parameters of simulations in `other_values.txt` and `parameters_table.txt`.
 
-> NOTE: if you cannot run the scripts in your bash terminal, it may be because of the parallelising code. You can set `jobs=1` in `run_analysis.sh` and `run_scan.sh`.
+> **NOTE**: if you cannot run the scripts in your bash terminal, it may be because of the parallelising code. You can set `jobs=1` in `run_analysis.sh` and `run_scan.sh`.
 
 ## Reproducing the figures of the paper
+
+> **NOTE**: the generated data that was used in the publication is included in the latest release in the file `parameter_scan3.zip`. It can be used to reproduced the publication analysis without re-generating the data.
 
 These are the output fo the following scripts:
 
