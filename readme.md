@@ -1,4 +1,4 @@
-# Krattenmacher et al. 2022
+# Krattenmacher et al. 2024
 
 ## Setting up the python environment
 
